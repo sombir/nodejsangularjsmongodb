@@ -1,0 +1,119 @@
+<nav class="navbar navbar-expand-md navbar-light bg-faded">
+	<div class="container-fluid">
+		<div>
+			<a class="navbar-brand" rel="home" href="" title="Charter Communications" [routerLink]="['./home']" (click)="goToCluster()">
+				<img src="../assets/images/Charter_Communications_Logo.png" id="Ruckus_Wireless_Logo">
+			</a>
+			<span class="central-discovery-system">Central Discovery Service</span>
+		</div>
+		<div>
+			<!-- <span class = "clock"><i class="fa fa-clock-o" aria-hidden="true"></i></span>&nbsp;&nbsp;&nbsp;
+			<span class = "triangle"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>&nbsp;&nbsp;&nbsp;
+			<span class = "user" href="" (click)="logout()" data-toggle="tooltip" data-placement="right" title="Logout"><i class="fa fa-user" aria-hidden="true"></i></span>&nbsp;&nbsp;&nbsp;
+			<span class = "question"><i class="fa fa-question-circle" aria-hidden="true"></i></span> -->
+			<span class="dropdown userIconDropdown">
+			    <button type="button" class="btn userIconBtm" data-toggle="dropdown">
+			      <i class="fa fa-user usericon" aria-hidden="true"></i>
+			    </button>
+			    <span class="dropdown-menu userIconMenu">
+			      <span class="dropdown-item user userIconItem" href="" (click)="logout()" data-placement="right" title="Logout">Logout  </span>
+			    </span>
+			  </span>
+			 <span class = "question" title="Help"><a href="{{helpHref}}" target="_blank"><i class="fa fa-question-circle questIcon" aria-hidden="true"></i></a></span>
+		</div>
+	</div>
+</nav>
+
+
+<div class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:200px;" id="mySidebar">
+	<button class="w3-bar-item w3-button w3-large w3-hide-large" (click)="w3_close()" style = "text-align: right;">&times;</button>
+	<a [routerLink]="['./home']" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isDashboardActive}" (click)="onEvent($event)">Dashboard</a>
+	<a [routerLink]="['./inventory']" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isInventoryActive}" (click)="onEvent($event)">Inventory</a>
+	<!-- <a [routerLink]="['./admin']" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isAdminActive}" (click)="changeClass('Admin')">Admin</a> -->
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+			<a class = "w3-bar-item w3-button" data-toggle="collapse" data-parent="#accordion" href="#collapseMenu" aria-expanded="false">Admin</a>
+			<div id="collapseMenu" class="panel-collapse collapse">
+				<div class="list-group submenu-margin">
+					<a [routerLink]="['./admin']" id = "SS" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isSettingsActive}" (click)="onEvent($event)">
+						System Settings
+					</a>
+				</div>
+				<div class="list-group submenu-margin">
+					<a [routerLink]="['./adminActivities']" id = "AA" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isActivitiesActive}" (click)="onEvent($event)">
+						Admin Activities
+					</a>
+                </div>
+                <div class="list-group submenu-margin">
+					<a [routerLink]="['./configBackups']" id = "CB" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isBackupsActive}" (click)="onEvent($event)">
+						Config Backups
+					</a>
+				</div>
+				<div class="list-group submenu-margin">
+					<a [routerLink]="['./apiKey']" id = "AT" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isAPIKeysActive}" (click)="onEvent($event)">
+						API Tokens
+					</a>
+				</div>
+				<div class="list-group submenu-margin">
+					<a [routerLink]="['./userList']" id = "US" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isUsersActive}" (click)="onEvent($event)">
+						Users
+					</a>
+				</div>
+				<div class="list-group submenu-margin">
+					<a [routerLink]="['./applicationLogs']" id = "US" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isLogsActive}" (click)="onEvent($event)">
+						Application Logs
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<a (click)="goToAPI()" class="w3-bar-item w3-button" [ngClass]="{'highlight-item': isApiActive}">API</a><br>
+	<a href="javascript:void(0);" class="appversion">Version : <span class="appversiontext">{{appVersion}}</span></a>
+	<!--
+	<br><br>
+	<a href="#demo4" class="sidebar-dropdown" data-toggle="collapse" data-parent="#MainMenu">System  <i class="fa fa-caret-down"></i></a>
+    <div class="collapse" id="demo4">
+		<a href="" class="sidebar-dropdown">Version {{appVersion}}</a>
+    </div>
+	-->
+</div>
+
+<div class="w3-main" style="margin-left:200px">
+	<div>
+		<button class="w3-button w3-hide-large" (click)="w3_open()">&#9776;</button>
+	</div>
+
+	<div class="w3-container">
+		<router-outlet></router-outlet>
+	</div>	
+</div>
+
+<div id="openModelDialogHeader" hidden="true" data-toggle="modal" data-target="#modelDialogHeader" ></div>
+<!-- The Modal -->
+<div class="modal fade" id="modelDialogHeader">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title" id="dashboardModalTitle"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="body-content">
+                    <div>
+                        <label id="dashboardModalMessage"></label>
+                    </div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="okBtn" (click)="onOk()" data-dismiss="modal">OK</button>
+				<button type="button" class="btn btn-secondary" id="cancelBtn" (click)="onCancel()" data-dismiss="modal">Cancel</button>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+ <!-- <ng-template #openDialog></ng-template>  -->

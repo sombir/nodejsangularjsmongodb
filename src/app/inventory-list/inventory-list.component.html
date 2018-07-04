@@ -1,0 +1,66 @@
+<div class="container-fluid">
+	<div class="row">
+		<div id="Wrapper">
+			<div id="SideBar">
+				<div class=" treeActionBtnGrp btn-group" role="group" aria-label="Basic example" align="pull-right">
+					<button type="button" class="btn btn-default" id="addTreeBtn" hidden="true"></button>
+					<button type="button" class="btn btn-default" id="editTreeBtn" hidden="true"></button>
+					<button type="button" class="btn btn-default" id="deleteTreeBtn" hidden="true"></button>
+					<button type="button" class="btn btn-default" id="refeshTreeBtn" (click)='refreshAPTree()' ></button>
+				</div>
+				
+				<div id="treeViewPanel">
+					<div class="treeViewClass">
+						<tree-root (event)="onEvent($event)" #tree [nodes]="nodes" [options]="options">
+							<ng-template #treeNodeTemplate let-node>
+								<span *ngIf="!node.data.isCluster  && (node.parent.data.name!='Unmanaged APs')" data-toggle="tooltip" data-placement="top" title={{node.data.name}}>
+									<img src="../assets/images/zone.svg" class="badgeText"><span *ngIf="node.data.name.length<=8"> {{ node.data.name }}</span><span *ngIf="node.data.name.length>8"> {{ node.data.name.substring(0, 12) }}...</span><span class="pull-right"><!-- <span *ngIf="node.data.onlineAP!=0" class="badge badge-pill badge-primary">{{node.data.onlineAP}}</span> --><span *ngIf="node.data.flaggedAP!=0" class="badge badge-pill badge-warning">{{node.data.flaggedAP}}</span><span *ngIf="node.data.offlineAP!=0" class="badge badge-pill badge-danger">{{node.data.offlineAP}}</span></span>
+								</span>
+								<span *ngIf="node.data.isCluster && (node.data.name =='Unmanaged APs')" data-toggle="tooltip" data-placement="top" title={{node.data.name}}>
+									<img src="../assets/images/unmanaged.png" class="badgeText"> {{ node.data.name }}<span class="pull-right"><span class="badge badge-pill badge-default" *ngIf="(node.data.name=='Unmanaged APs')">{{apsCount}}</span></span>
+								</span>
+								<span *ngIf="node.data.isCluster && node.children.length && (node.data.name !='Unmanaged APs')" data-toggle="tooltip" data-placement="top" title={{node.data.name}}>
+									<img src="../assets/images/cluster.svg" class="badgeText"> {{ node.data.name }}<span class="pull-right"><span class="badge badge-pill badge-default">{{node.children.length}}</span></span>
+								</span>
+								<span *ngIf="node.data.isCluster && !node.children.length" class="clusterTree" data-toggle="tooltip" data-placement="top" title={{node.data.name}}>
+									<img src="../assets/images/unmanaged.png" class="badgeText"> {{ node.data.name }}<span class="pull-right"><span class="badge badge-pill badge-default" *ngIf="(node.data.name=='Unmanaged APs')">{{apsCount}}</span></span>
+								</span>
+							</ng-template>
+						</tree-root>
+					</div>
+				</div>
+			</div>
+			<div class="managedAPTemplate"><ng-template #managedAP style="width:100%;"></ng-template></div>
+		</div>
+	</div>
+	<!-- Loader Overlay -->
+	<div id="managedAPOverlay"><div id="managedAPListLoader"></div></div>
+</div>
+
+  <app-import-ap [ngStyle]="{'display':importAPDisplay}" (refreshEvent)="recieveRefresh($event)" [selectedClusterForAPImport]=selectedClusterForAPImport></app-import-ap>
+
+  <!-- The Modal -->
+<div class="modal fade" id="inventoryListModelDialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{modelTitle}}</h4>
+				<button type="button" class="close crossBtn" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="body-content">
+					<div>
+						<label>{{modelMessage}}</label>
+					</div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" id="okBtn" (click)="onOk()" >OK</button>
+			</div>
+			
+		</div>
+	</div>
+</div>

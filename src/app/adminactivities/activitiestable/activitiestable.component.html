@@ -1,0 +1,60 @@
+<div id="activityTableBody">
+	<div id="activityTable">
+		<div class="container-fluid"> 
+			<div class="table-responsive">
+				<table datatable [(dtOptions)]="dtOptions" class="table table-bordered" id="activityTable">
+					<thead>
+  						<tr class="cancel_sorting">
+  							<th >Date and Time</th>
+  							<th >Administrator</th>
+  							<!-- <th >Managed by</th> -->
+  							<th >Source IP</th>
+  							<th >Action</th>
+  							<th >Resource</th>
+  							<th >Description</th>
+  						</tr>
+  					</thead>
+  					<tbody>
+  						<tr *ngFor="let activity of this.activityList">
+  							<td >{{activity.activitytime | date: 'MM/dd/yyyy hh:mm:ss a' : timezone}}</td>
+  							<td >{{activity.username}}</td>
+  							<!-- <td >{{activity.managedby}}</td> -->
+  							<td >{{activity.sourceip}}</td>
+  							<td >{{activity.action}}</td>
+  							<td >{{activity.resource}}</td>
+                <td ><span *ngIf="activity.description!=null"><span *ngIf="activity.description.length<=83">{{activity.description}}</span><span *ngIf="activity.description.length>83" data-toggle="tooltip" data-placement="top" title={{activity.description}}>{{activity.description.substring(0,80)}}...</span></span><span *ngIf="activity.description==null">{{activity.description}}</span></td>
+  						</tr>
+  					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="openAdminActivitiesTablePopup" data-target="#adminActivitiesPopup" data-toggle="modal"></div>
+<div class="modal fade" id="adminActivitiesPopup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{adminActivitesTitle}}</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="modal-body">
+          <div class="body-content">
+              <label>{{adminActivitesMessage}}</label>
+          </div>
+        </div>
+
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="okAdminActivitiesBtn" data-dismiss="modal" (click)="okadminActivites()">Ok</button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+
+.treeViewClass div.tree-children::before,
+div.tree::before {
+    content: "";
+    position: absolute;
+    /*border-left: 1px dotted #23527c;*/
+    height: 100%;
+    left: 12px;
+    top: -14px;
+}
+
+.treeViewClass {
+    padding-left: 0;
+    margin-left: -5px;
+    font-size: 13px !important;
+    color: #797979;
+    margin-top: 10px;
+}
+
+.treeViewClass div.tree-children {
+    position: relative;
+    padding-left: 0px;
+    margin-left: 20px;
+}
+
+.treeViewClass div.tree-children::before {
+    left: 0px;
+}
+
+.treeViewClass tree-node>div>.node-wrapper {
+    margin-left: 24px;
+}
+
+.treeViewClass tree-node>div>.node-wrapper>.node-content-wrapper {
+    margin-left: 4px;
+    white-space: nowrap;      /*keep text on one line */
+}
+
+.treeViewClass tree-node>div.tree-node-leaf>.node-wrapper {
+    margin-left: 0px;
+}
+
+.treeViewClass tree-node>div::before {
+    content: "";
+    position: absolute;
+    /*border-bottom: 1px dotted #23527c;*/
+    width: 25px;
+    margin-top: 16.6px;
+    left: 1px;
+}
+
+.treeViewClass tree-node>div .toggle-children-wrapper {
+    width: 13px;
+    height: 13px;
+    border: 1px solid #23527c;
+    position: absolute;
+    left: 9px;
+    margin-top: 10px;
+    margin-left: 5px;
+    display: inline-block;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.treeViewClass tree-node>div .toggle-children-wrapper::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    border-top: 1px solid #23527c;
+    position: absolute;
+    top: 5px;
+    left: 2px;
+}
+
+.treeViewClass tree-node>div .toggle-children-wrapper.toggle-children-wrapper-collapsed::after {
+    content: "";
+    display: inline-block;
+    height: 7px;
+    border-left: 1px solid #23527c;
+    position: absolute;
+    top: 2px;
+    left: 5px;
+}
+
+.treeViewClass tree-node>div .toggle-children-wrapper .toggle-children {
+    display: none;
+}
+
+.treeViewClass tree-node>div .node-content-wrapper {
+    margin-left: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    flex-grow: 1;
+    position: relative;
+    white-space: nowrap;      /*keep text on one line */
+    padding: 4px 5px !important;
+}
+
+.treeViewClass tree-node>div .tree-node-level-3{
+    margin-left: -7px !important;
+}
+
+.treeViewClass>tree-node>div::before {
+    left: 14px;
+}
+
+.treeViewClass>tree-node>div>.node-wrapper>tree-node-expander>.toggle-children-wrapper {
+    left: 22px;
+}
+
+.treeViewClass .pull-right {
+  position: absolute;
+  right: 10px;
+}
+
+.treeViewClass .node-content-wrapper-active, .node-content-wrapper.node-content-wrapper-active:hover, .node-content-wrapper-active.node-content-wrapper-focused{
+    background-color: #BFD2E5;
+    white-space: nowrap;      /*keep text on one line */
+}
+
+.clusterTree{
+    margin-left: -10px;
+}

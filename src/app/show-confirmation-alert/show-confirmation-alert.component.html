@@ -1,0 +1,30 @@
+<div id="openpopup" data-toggle="modal" data-target="#confirmationModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{title}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="body-content">
+						<div><label>{{message}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okBtn" data-dismiss="modal" (click)="ok()">Ok</button>
+				<button type="button" class="btn btn-secondary" id="closepopupBtn" (click)="close()" data-dismiss="modal">Cancel</button>
+			</div>
+
+		</div>
+	</div>
+</div>

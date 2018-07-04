@@ -1,0 +1,169 @@
+<div class="mainBody">
+   <div class="configHeader">
+      API Tokens
+   </div>
+   <div class="subBody">
+      <div class="container-fluid">
+         <div class="clusterBtns d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between">
+            <div class="btn-group" role="group" aria-label="Basic example">
+               <button type="button" class="btn btn-default" id="refeshBtn" (click)="refreshTable()" title="Refresh API Tokens" alt="Refresh API Tokens"></button>
+               <button type="button" class="btn btn-default" id="addBtn" data-toggle="modal" data-target="#createAPIKeyModelDialog" title="Add New Token" alt="Add New Token"></button>
+               <button type="button" class="btn btn-default" id="editBtn" [disabled] = "isDisabled" title="Update Token" alt="Edit Token" data-toggle="modal" data-target="#updateAPIModal"></button>
+               <button type="button" class="btn btn-default" id="deleteBtn" [disabled] = "isDisabled" data-toggle="modal" data-target="#deleteAPIKeyModal" title="Delete Token" alt="Delete Token"></button>
+            </div>
+         </div>
+      </div>
+      <div>
+         <div class="container-fluid">
+            <div class="table-responsive">
+               <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered"  width="100%" id="apiTable">
+                  <thead>
+                     <tr class="cancel_sorting">
+                        <th class="sorting_disabled">
+                           <div class="text-center">
+                              <input type="checkbox" value="" id="selectAllCheck" [(ngModel)]="selectedAll" (change)="selectAll($event)" >
+                           </div>
+                        </th>
+                        <th>API Token</th>
+                        <th align="center" class="graphics">Role</th>
+						<th align="center" class="graphics">Status</th>
+                        <th>Description</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let data of apiKeysList">
+                        <td class="text-center"><input type="checkbox" value="" [(ngModel)]="data.select" (change)="selectToken(data,data.select)"></td>
+                        <td>{{data.key}}</td>
+						<td align="center">{{data.role}}</td>
+                        <td *ngIf="data.status=='Active'" align="center"><img src="../../../assets/images/icon_blue.png" class="status" data-toggle="tooltip" data-placement="top" title="Active"></td>
+                        <td *ngIf="data.status=='Suspended'" align="center"><img src="../../../assets/images/icon_grey.png" class="status" data-toggle="tooltip" data-placement="top" title="Suspended"></td>
+                        <td >{{data.description}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+      <div class="modal fade" id="createAPIKeyModelDialog">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <!-- Modal Header -->
+               <div class="modal-header">
+                  <h4 class="modal-title">Add Token</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button> 
+               </div>
+               <!-- Modal body -->
+               <div class="modal-body">
+                  <div class="body-content">
+                     <div class="form-group row">
+                        <label class="col-sm-3 col-form-label textLabel">Description :</label>
+                        <div class="col-sm-9">
+                           <textarea class="form-control" rows="5" id="desc" [(ngModel)]="desc" name="desc"></textarea>
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="col-sm-3 col-form-label textLabel">Status :</label>
+                        <div class="col-sm-9">
+                           <label class="switch">
+                           <input id="status" type="checkbox" checked>
+                           <span class="slider round" data-toggle="tooltip" data-placement="top" title="To enable/disable Api Token"></span>
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Modal footer -->
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="primaryBtn" (click)="createAPIKey()">Save</button>
+                  <button type="button" class="btn btn-secondary" id="cancelBtn" data-dismiss="modal">Cancel</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- The Modal -->
+      <div class="modal fade" id="modelDialog">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <!-- Modal Header -->
+               <div class="modal-header">
+                  <h4 class="modal-title">{{modelTitle}}</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <!-- Modal body -->
+               <div class="modal-body">
+                  <div class="body-content">
+                     <div>
+                        <label>{{message}}</label>
+                     </div>
+                  </div>
+               </div>
+               <!-- Modal footer -->
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="primaryBtn" (click)="onOk()">OK</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- The Modal -->
+      <div class="modal fade" id="deleteAPIKeyModal">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <!-- Modal Header -->
+               <div class="modal-header">
+                  <h4 class="modal-title">Delete API token</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <!-- Modal body -->
+               <div class="modal-body">
+                  <div class="body-content">
+                     <div *ngIf = "selectedTokens.length"><label>Are you sure, you want to delete the API token?</label></div>
+                     <div *ngIf = "!selectedTokens.length"><label>Please select at least one API token to delete</label></div>
+                  </div>
+               </div>
+               <!-- Modal footer -->
+               <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" id="primaryBtn" *ngIf = "selectedTokens.length" (click)="deleteAPIKey()">Yes! Delete</button>
+                  <button type="button" class="btn btn-secondary" id="cancelBtn" (click)="cancel()">Cancel</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!--modal for update API Key-->
+      <div class="modal fade" id="updateAPIModal">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <!-- Modal Header -->
+               <div class="modal-header">
+                  <h4 class="modal-title">Update token Status</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button> 
+               </div>
+               <!-- Modal body -->
+               <div class="modal-body">
+                  <div class="body-content">
+                     <div class="form-group row" *ngIf = "selectedTokens.length">
+                        <label class="col-sm-7 col-form-label textLabel">Activate/Suspend all selected tokens :</label>
+                        <div class="col-sm-5">
+                           <label class="switch">
+                           <input id="apiKeystatus" type="checkbox" checked>
+                           <span class="slider round" data-toggle="tooltip" data-placement="top" title="To enable/disable Api Token"></span>
+                           </label>
+                        </div>
+                     </div>
+                     <div class="form-group row" *ngIf = "!selectedTokens.length">
+                        <label class="col-sm-12 col-form-label textLabel">Please select at least one API token to update token status</label>
+                     </div>
+                  </div>
+               </div>
+               <!-- Modal footer -->
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="primaryBtn" *ngIf = "selectedTokens.length" (click)="bulkAPIUpdate()">Update</button>
+                  <button type="button" class="btn btn-secondary" id="cancelBtn" data-dismiss="modal">Cancel</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Loader Overlay -->
+  <div id="overlay"><div id="listLoader"></div></div> 

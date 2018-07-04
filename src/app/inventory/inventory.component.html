@@ -1,0 +1,147 @@
+<div id="inventoryBody">
+	<div id="inventoryHeader">
+		<div class="d-flex">
+			<div class="inventoryTitleMain">
+				<h3>Inventory</h3>
+			</div>
+			<div class="clusterBadge" id="clusterData">Clusters  
+				<span class="badge badge-pill badge-light pointer" *ngIf="onlineClusterCount" (click)="showOnlineClusters()">{{onlineClusterCount}}</span><span class="badge badge-pill badge-warning pointer" *ngIf="flaggedCLusterCount" (click)="showFlaggedClusters()" >{{flaggedCLusterCount}}</span><span class="badge badge-pill badge-danger pointer" *ngIf="offlineClusterCount" (click)="showOfflineClusters()">{{offlineClusterCount}}</span>
+			</div>
+			<div class="clusterBadge" id="managedAPData">APs managed by clusters  
+				<span class="badge badge-pill badge-light pointer" *ngIf="onlineAPCount" (click)="showOnlineManagedAP()">{{onlineAPCount}}</span><span class="badge badge-pill badge-warning pointer" *ngIf="flaggedAPCount" (click)="showFlaggedManagedAP()">{{flaggedAPCount}}</span><span class="badge badge-pill badge-danger pointer" *ngIf="offlineAPCount" (click)="showOfflineManagedAP()">{{offlineAPCount}}</span>
+			</div>
+			<div class="clusterBadge" id="unmanagedAPData">Unmanaged APs  
+				<span class="badge badge-pill badge-light pointer" *ngIf="apsCount" (click)="showUnmanagedAP()">{{apsCount}}</span>
+			</div>
+		</div>
+	</div>
+	<div id="inventoryRouterTable">
+		<div class="row tab-row" align="center">
+			<div class="col-12">
+				<ul class="nav nav-tabs justify-content-end" role="tablist">
+					<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#clusterTab" role="tab" (click)="showClusterTable()" id="showClusterTableDetails">Clusters</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#apTab" role="tab" (click)="showAPData()" id="showAPDetails">APs</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-content py-4 panel-color">
+			<div class="tab-pane active" id="clusterTab" role="tabpanel">
+				<cluster></cluster>
+			</div>
+			<div class="tab-pane" id="apTab" role="tabpanel">
+				<div id="mainTableHeader" class="d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between">
+					<div class="inventoryTitle">
+						<h3>{{pageName}}</h3><p id="unmanagedAPSubTitle">APs that are provisioned in the CDS but not managed by SZ Controllers</p>
+					</div>
+					<div class="tabOptions">
+						<p>View Mode:</p>
+						<div id="tabBtnGroup">
+							<button type="button" class="btn btn-default" id="showAPTableBtn" (click)="showAPTreeData()">Group</button><button type="button" class="btn btn-default" id="showInventoryTableBtn" (click)="showInventoryTable()">List</button>
+						</div>
+					</div>
+				</div>
+				<!-- <router-outlet></router-outlet> -->
+				<app-accesspoint [ngStyle]="{'display':displayAPList}" ></app-accesspoint>
+				<app-inventory-list [ngStyle]="{'display':displayAPTree}" ></app-inventory-list>
+			</div>
+		</div>
+
+
+
+
+
+
+
+	<!-- 	<div id="mainBody">
+			<div id="mainTableHeader" class="d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between">
+				<div class="inventoryTitle">
+					<h3>{{pageName}}</h3>
+				</div>
+				<div class="tabOptions">
+					<p>View Mode:</p>
+					<div id="tabBtnGroup">
+						<button type="button" class="btn btn-default" id="showAPTableBtn" [routerLink]="['./accesspoints']" (click)="showAPTables()">AP Tree</button><button type="button" class="btn btn-default" id="showInventoryTableBtn" [routerLink]="['./inventory']" (click)="showInventoryTable()">AP List</button>
+					</div>
+				</div>
+			</div>
+			<router-outlet></router-outlet>
+		</div> -->
+	</div>
+	<!-- <div id="unmanagedAPTable">
+		<div id="accordion" class="accordion">
+			<div class="card m-b-0">
+				<div class="card-header" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+					<div class="card-title">
+						<h3>Unmanaged APs</h3>
+					</div>
+				</div>
+				<div id="collapseOne" class="card-block collapse">
+					<div class="container-fluid"> 
+						<p id="unmanagedAPSubTitle">APs that are provisioned in the CDS but not managed by SZ Controllers</p>
+						<br><br>
+						<div class="table-responsive">
+							<table datatable [dtOptions]="dtOptions" class="table table-bordered" id="unmanagedApTable" width="100%">
+								<thead>
+									<tr>
+										<th >AP Serial</th>
+										<th >AP Name</th>
+										<th >Mac Address</th>
+										<th >IP</th>
+										<th class="graphics">Status</th>
+										<th >Cluster</th>
+										<th >Discovery Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let ap of this.unmanagedApsList">
+										<td >{{ap.apserial}}</td>
+										<td >{{ap.apname}}</td>
+										<td >{{ap.mac}}</td>
+										<td >{{ap.ip}}</td>
+										<td class="graphics" *ngIf="ap.cds_cluster_state=='STRANDED'"><div class="yellowStatus">{{ap.cds_cluster_state}}</div></td>
+										<td class="graphics" *ngIf="ap.cds_cluster_state=='NOTINCLUSTER'"><div class="yellowStatus">{{ap.cds_cluster_state}}</div></td>
+										<td class="graphics" *ngIf="ap.cds_cluster_state=='REJECTED'"><div class="greyStatus">{{ap.cds_cluster_state}}</div></td>
+										<td class="graphics" *ngIf="ap.cds_cluster_state==''"><div class="greyStatus">N/A</div></td>
+										<td >{{ap.clustername}}</td>
+										<td *ngIf="ap.last_contacted">{{ap.last_contacted | date: 'MM/dd/yyyy hh:mm:ss a' : timezone}}</td>
+										<td *ngIf="!ap.last_contacted">N/A</td>
+									</tr> 
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</div>
+
+<div id="openInventorypopup" data-toggle="modal" data-target="#confirmInventoryModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmInventoryModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{inventoryTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="body-content">
+						<div><label>{{inventoryMessage}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okInventoryBtn" data-dismiss="modal" (click)="okInventoryBtnClicked()" >Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>

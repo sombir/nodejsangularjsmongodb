@@ -1,0 +1,96 @@
+<!-- The Modal -->
+<div class="modal fade" id="editUserModal">
+   <div class="modal-dialog">
+      <div class="modal-content" *ngIf='oneUserSelected'>
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Edit User</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <form novalidate [formGroup]="editUserForm" >
+            <div class="modal-body">
+               <div class="body-content">
+                  <div class="form-group" >
+                     <label for="username">Username</label>
+                     <input type="text" class="form-control" formControlName="username" name="username">
+                  </div>
+                  <div class="form-group" [ngClass]="{ 'has-danger': email.invalid && (email.dirty || email.touched), 'has-success': email.valid && (email.dirty || email.touched) }">
+                     <label for="email">Email Id</label>
+                     <input type="email" class="form-control" placeholder="Enter email id" name="email" formControlName="email" required email>
+                     <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+                        <p *ngIf="email.errors.required">Email id is required.</p>
+                        <p *ngIf="email.errors.email">Email id must be valid.</p>
+                     </div>
+                  </div>
+                  <div class="form-group" [ngClass]="{ 'has-danger': password.invalid && (password.dirty || password.touched), 'has-success': password.valid && (password.dirty || password.touched) }">
+                     <label for="password">Password</label>
+                     <input type="password" class="form-control" placeholder="Enter password" name="password" formControlName="password" required>
+                     <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
+                        <p *ngIf="password.errors.required">Password is required.</p>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="timezones">Time Zone</label>
+                     <select class="form-control dropDownOption" id="editUserTimeZone" formControlName="timezones" name="timezones">
+                        <option value="" selected="true">Select time zone</option>
+                        <option value="UTC-09:00">Hawaii–Aleutian Time Zone</option>
+                        <option value="UTC-08:00">Alaska Time Zone</option>
+                        <option value="UTC-07:00">Pacific Time Zone</option>
+                        <option value="UTC-06:00">Mountain Time Zone</option>
+                        <option value="UTC-05:00">Central Time Zone</option>
+                        <option value="UTC-04:00">Eastern Time Zone</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+               <div [ngStyle]="{'display':loaderDisplay}" class="loader"></div>
+               <button type="submit" class="btn btn-primary" id="editUserBtn" (click)="editUserDetails()">Edit</button>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelEdit" (click)="canceleditUserDetails()">Cancel</button>
+            </div>
+         </form>
+      </div>
+      <div class="modal-content" *ngIf='wrongNoofUserSelected'>
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Edit User</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal Body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div><label>Please select one user to edit.</label></div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelEdit" (click)="canceleditUserDetails()">Cancel</button>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade" id="modalAlertUser">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div>
+                  <label>{{message}}</label>
+               </div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="primaryBtn" (click)="onOk()">OK</button>
+         </div>
+      </div>
+   </div>
+</div>

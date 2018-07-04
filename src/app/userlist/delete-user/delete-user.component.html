@@ -1,0 +1,64 @@
+<!-- The Modal -->
+<div class="modal fade" id="deleteUserModal">
+   <div class="modal-dialog">
+      <div class="modal-content" *ngIf='oneUserSelectedDelete'>
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Delete User</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal Body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div><label>Are you sure, you want to delete the user?</label></div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="primaryBtn" (click)="deleteUserDetails()">Yes! Delete</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDelete" (click)="cancelDeleteUserDetails()">Cancel</button>
+         </div>
+      </div>
+      <div class="modal-content" *ngIf='moreUserSelectedDelete'>
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Delete User</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal Body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div><label>Please select one user to delete.</label></div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDelete" (click)="cancelDeleteUserDetails()">Cancel</button>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade" id="modalAlertUserDelete">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div>
+                  <label>{{message}}</label>
+               </div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="primaryBtn" (click)="onOk()">OK</button>
+         </div>
+      </div>
+   </div>
+</div>

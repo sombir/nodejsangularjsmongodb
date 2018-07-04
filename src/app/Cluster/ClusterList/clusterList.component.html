@@ -1,0 +1,78 @@
+<div id="clusterListTable">
+  <!-- <div><h4>Clusters : {{count}}</h4></div> -->
+  <!--   <br> -->
+  <div class="container-fluid"> 
+    <div class="table-responsive">          
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  class="table table-bordered" id="clusterTable"  width="100%">
+        <thead>
+          <tr class="cancel_sorting">
+            <th class="sorting_disabled">
+              <div class="text-center">
+                <input type="checkbox" value="" id="selectAllCheck" [(ngModel)]="selectedAll" (change)="selectAll($event)" >
+              </div>
+            </th>
+            <th>Name</th>
+            <th>Connected Host</th>
+            <th class="graphics">Connectivity State</th>
+            <th class="graphics apnumber">APs</th>
+            <th class="graphics">Control Planes</th>
+            <th class="graphics">Data Planes</th>
+            <th class="graphics">AP License Used(%)</th>
+            <th class="hidecolumn" hidden="true">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cluster of tableData">
+            <td  class="text-center">
+              <input type="checkbox" value="" [(ngModel)]="cluster.select" (change)="selectCluster(cluster,cluster.select)">
+            </td>
+            <td ><a href="javascript:void(0)" (click)="goToClusterDetail(cluster.ip)">{{cluster.name}}</a> <img src="../../../assets/images/default-clean.svg" class="defaultClusterStar" *ngIf="cluster.defaultcluster" data-toggle="tooltip" data-placement="top" title="Default Cluster"></td>
+            <td ><a href="javascript:void(0)" (click)="goTovSZ(cluster.ip)" target="_blank">{{cluster.ip}}</a></td>
+            <td class="graphics" *ngIf="cluster.status==1;"><img src="../../../assets/images/icon_blue.png" class="status" data-toggle="tooltip" data-placement="top" title="Online"></td>
+            <td class="graphics" *ngIf="cluster.status==2;"><img src="../../../assets/images/icon_yellow.png" class="status" data-toggle="tooltip" data-placement="top" title="Flagged"></td>
+            <td class="graphics" *ngIf="cluster.status==0;"><img src="../../../assets/images/icon_red.png" class="status" data-toggle="tooltip" data-placement="bottom" title="Offline"></td>
+            <!-- <ng-template #offlineBlock><td class="graphics"></td></ng-template> -->
+            <td class="graphics apnumber" *ngIf="cluster.connectionStatus; else noAP"><span class="badge badge-pill badge-light" *ngIf="cluster.onlineAP!=0">{{cluster.onlineAP}}</span><span class="badge badge-pill badge-warning" *ngIf="cluster.flaggedAP!=0">{{cluster.flaggedAP}}</span><span class="badge badge-pill badge-danger" *ngIf="cluster.offlineAP!=0">{{cluster.offlineAP}}</span></td>
+            <ng-template #noAP><td></td></ng-template>
+            <td class="graphics" *ngIf="cluster.connectionStatus; else noCP"><span class="badge badge-pill badge-light" *ngIf="cluster.onlineCP!=0">{{cluster.onlineCP}}</span><span class="badge badge-pill badge-danger" *ngIf="cluster.offlineCP!=0">{{cluster.offlineCP}}</span><span class="badge badge-pill badge-warning" *ngIf="cluster.flaggedCP!=0">{{cluster.flaggedCP}}</span></td>
+            <ng-template #noCP><td></td></ng-template>
+            <td class="graphics" *ngIf="cluster.connectionStatus; else noDP"><span class="badge badge-pill badge-light" *ngIf="cluster.onlineDP!=0">{{cluster.onlineDP}}</span><span class="badge badge-pill badge-danger" *ngIf="cluster.offlineDP!=0">{{cluster.offlineDP}}</span><span class="badge badge-pill badge-warning" *ngIf="cluster.flaggedDP!=0">{{cluster.flaggedDP}}</span></td>
+            <ng-template #noDP><td></td></ng-template>
+            <td class="graphics" *ngIf="cluster.connectionStatus; else noLicense">{{cluster.APLicenseUsed}}</td>
+            <ng-template #noLicense><td></td></ng-template>
+            <td  hidden="true" *ngIf="cluster.status==1">Online</td>
+            <td  hidden="true" *ngIf="cluster.status==2">Flagged</td>
+            <td  hidden="true" *ngIf="cluster.status==0">Offline</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+  <!-- Loader Overlay -->
+  <div id="overlay"><div id="listLoader"></div></div>
+  
+  <div class="modal fade" id="clusterListModelDialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{modelTitle}}</h4>
+				<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="body-content">
+                    <div>
+                        <label>{{modelMessage}}</label>
+                    </div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" id="okBtn" (click)="onOk()" >OK</button>
+			</div>
+			
+		</div>
+	</div>
+</div>

@@ -1,0 +1,37 @@
+<div id="container" class="container">
+	<div id="header" class="header"><span class="orange">Ruckus</span><span class="white"> Wireless</span></div>
+	<div align="center" id="loginContainer">
+		<div id="loginHeader" align="center">
+			<img src="../assets/images/login-icon.png" id="wifiImg" class="img-fluid">
+			<div id="loginHeaderText"><span class="orange">Central Discovery Service</span></div>
+		</div>
+		<form novalidate [formGroup]="loginForm">
+			<div id="loginForm" align="center">
+				<div class="form-group" [ngClass]="{'has-danger': username.invalid && (username.dirty || username.touched),'has-success': username.valid && (username.dirty || username.touched)}" align="center">
+					<input type="text" name="" class="form-control" placeholder="Username" formControlName="username" required (keyup.enter)="loginClicked()" id="username">
+					<div class="form-control-feedback" *ngIf="username.errors && (username.dirty || username.touched)">
+						<p *ngIf="username.errors.required" style="color:red;">Username is required</p>
+					</div>
+				</div>
+				<div class="form-group" [ngClass]="{'has-danger': password.invalid && (password.dirty || password.touched),'has-success': password.valid && (password.dirty || password.touched)}" align="center">
+					<input type="password" name="" class="form-control" placeholder="Password" formControlName="password" required (keyup.enter)="loginClicked()" id="password">
+					<div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
+						<p *ngIf="password.errors.required" style="color:red;">Password is required</p>
+					</div>
+				</div>
+				<div id="loginBtn"  class="nav-item">
+					<button type="button" class="btn btn-default sharp" id="loginInput" (click)="loginClicked()">Login</button>
+				</div>
+				<div id="notvalidate1" [hidden]="notvalidate" align="center">
+					<label>* Please enter correct Username/Password</label>
+				</div>
+				<div id="notvalidate2" [hidden]="userpwdmissing" align="center">
+					<label>* Username/Password cannot be left Blank</label>
+				</div>
+				<div id="otherErrorMsg" [hidden]="otherErrorMessage" align="center">
+					<label></label>
+				</div>
+			</div>
+		</form>
+</div>
+</div>

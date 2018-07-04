@@ -1,0 +1,122 @@
+#managedApTable{
+    min-width: 960px;
+}
+
+.table > thead > tr > th {
+   background-color: #D4D4D4;
+   color: #636363;
+   height: 34px;
+   font-family: "Helvetica Neue",helvetica,arial,sans-serif;
+}
+
+.table > tbody > tr > td{
+    color: #7E7988;
+    height: 34px;
+}
+
+.table td, .table th{
+	vertical-align:inherit;
+	/*line-height : 2.5;*/
+}
+
+.table > tbody > tr:nth-child(2n+2) > td{
+   background-color: #F8F8F8;
+}
+
+.table{
+    color: #F3F3F4;
+}
+
+.table.dataTable{
+    border-collapse : collapse !important;
+}
+
+.table-bordered {
+    border: 1px solid #D7D7D7  !important;
+}
+
+.table-bordered tr {
+    border: 1px solid #D7D7D7  !important;
+}
+
+.table-bordered td, .table-bordered th {
+    border: 0px solid #e9ecef;
+}
+
+.table-responsive{
+    margin-top: 0.5%;
+    margin-bottom: 1%;
+}
+/*
+table.dataTable thead tr.cancel_sorting th:first-child:before {right: 0em; content: none !important;}
+table.dataTable thead tr.cancel_sorting th:first-child:after {right: 0em; content: none !important;}*/
+table.dataTable thead > tr > th.sorting_asc { padding-right: 0.75rem !important; }
+
+#apListBody{
+    width: 100%;
+}
+
+.clusterBtns{
+    display: -webkit-inline-box;
+    max-height: 30px;
+}
+
+#totalManagedAPCount{
+    max-width: 35%;
+    margin-left: 5px;
+    margin-right: 1.5%;
+    float: right;
+    clear: right;
+}
+
+.status{
+    width: 15px;
+}
+
+#importAPsBtn{
+    background: #5A96CF;
+    color: white;
+    font-weight: bold;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+.modal-content{
+  border-radius: 0px;
+}
+
+.modal-body{
+  padding: 0px 15px 0px 15px;
+}
+
+.body-content {
+    background-color: #F4F4F4;
+    padding: 2%;
+}
+
+#ImporteapfromtreeBtn, #okBtn{
+  background-color: #5A96CF;
+  color: #FFFFFF;
+  border-radius: 0px;
+  border-color: #5A96CF;
+}
+
+#CancelimportapBtn{
+    background-color: #A9A9A9;
+    color: #262121;
+    border-color: #A9A9A9;
+    border-radius: 0px;
+}

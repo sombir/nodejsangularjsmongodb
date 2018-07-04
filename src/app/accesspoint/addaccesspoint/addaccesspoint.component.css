@@ -1,0 +1,154 @@
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.form-control-feedback > p {
+  color: red
+}
+
+.inputDnD .form-control-file {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 6em;
+  outline: none;
+  visibility: hidden;
+  cursor: pointer;
+  background-color: #c61c23;
+  box-shadow: 0 0 5px solid #5A96CF;
+}
+.inputDnD .form-control-file:before {
+  content: attr(data-title);
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  width: 100%;
+  min-height: 6em;
+  line-height: 2em;
+  padding-top: 1.5em;
+  opacity: 1;
+  visibility: visible;
+  text-align: center;
+  border: 0.25em dashed #5A96CF;
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+}
+.inputDnD .form-control-file:hover:before {
+  border-style: solid;
+  box-shadow: inset 0px 0px 0px 0.25em #5A96CF;
+}
+
+#addAPBtn,#chooseBtn, #bulkUploadBtn{
+    background-color: #5A96CF;
+    color: #FFFFFF;
+    border-radius: 0px;
+    border-color: #5A96CF;
+}
+
+#cancelAdd, #cancelBulkUploadBtn{
+    background-color: #A9A9A9;
+    color: #262121;
+    border-color: #A9A9A9;
+    border-radius: 0px;    
+}
+
+.modal-content{
+  border-radius: 0px;
+}
+
+.modal-body{
+  padding: 0px 15px 0px 15px;
+}
+
+.body-content {
+    background-color: #F4F4F4;
+    padding: 2%;
+}
+
+#okaddAPBtn{
+  background-color: #5A96CF;
+  color: #FFFFFF;
+  border-radius: 0px;
+  border-color: #5A96CF;
+}
+.downloadSampleFile{
+  margin-right: 145px;
+}
+.bulkResBody{
+  overflow-y: auto;
+  max-height: 350px;
+}
+
+.BulkAPRes{
+	max-height : 200px;
+	overflow-y : scroll;
+}

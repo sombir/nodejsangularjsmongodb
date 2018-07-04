@@ -1,0 +1,161 @@
+<!-- The Modal -->
+<div class="modal fade" id="addApModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Add New AP</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<form novalidate [formGroup]="addApForm" >
+				<div class="modal-body">
+					<div class="body-content">
+						<div class="form-group" [ngClass]="{ 'has-danger': apSerial.invalid && (apSerial.dirty || apSerial.touched), 'has-success': apSerial.valid && (apSerial.dirty || apSerial.touched) }">
+							<label for="cname">AP Serial</label>
+							<input type="text" class="form-control" placeholder="Enter AP Serial Number" formControlName="apSerial" required>
+							<div class="form-control-feedback" *ngIf="apSerial.errors && (apSerial.dirty || apSerial.touched)">
+								<p *ngIf="apSerial.errors.required">AP Serial is required.</p>
+								<p *ngIf="apSerial.errors.numberError">AP Serial should only contain numbers.</p>
+								<p *ngIf="apSerial.errors.lengthError">AP Serial must be of length 12.</p>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': apName.invalid && (apName.dirty || apName.touched), 'has-success': apName.valid && (apName.dirty || apName.touched) }">
+							<label for="cip">AP Name</label>
+							<input type="text" class="form-control" placeholder="Enter AP Name" formControlName="apName">
+							<div class="form-control-feedback" *ngIf="apName.errors && (apName.dirty || apName.touched)">
+								<p *ngIf="apName.errors.patternError">AP name length must be between 2 and 64.</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="loginid">Cluster</label>
+							<select formControlName="ClusterData" (change)="selectCluster()" class="form-control">
+								<option value="" selected>Select Cluster</option>
+								<option value="{{cluster.ip}}" *ngFor="let cluster of clusterList">{{cluster.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="pwd">Zone</label>
+							<select formControlName="zoneData" class="form-control">
+								<option value="" selected>Select Zone</option>
+								<option *ngFor="let zone of zoneList">{{zone.name}}</option>
+							</select>
+						</div>
+						<hr>
+						<div id="bulkImport" align="center"><a data-dismiss="modal" href="#bulkUploadModal" (click)="showBulkImportModal()"  data-toggle="modal" data-target="#bulkUploadModal">Bulk Import instead?</a></div>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<div [ngStyle]="{'display':loaderDisplay}" class="loader"></div>
+					<button type="submit" class="btn btn-primary" id="addAPBtn" (click)="addApDetails()">Add</button>
+					<button type="button" class="btn btn-secondary" id="cancelAdd" (click)="cancelApDetails()">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="bulkUploadModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Bulk Import APs</h4>
+				<button type="button" class="close" data-dismiss="modal" (click)="cancelBulkUpload()">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<form novalidate [formGroup]="bulkAPUploadForm" >
+				<div class="modal-body" id="bulkUploadModalBody" align="center">
+					<div class="body-content">
+						<button type="button" class="btn btn-primary btn-lg" id="chooseBtn" (click)="browseCSVFile()">Choose a CSV file</button>
+						<div class="form-group inputDnD">
+							<label class="sr-only" for="inputFile">File Upload</label>
+							<input type="file" formControlName="inputFile" class="form-control-file text-primary font-weight-bold" id="inputFile" accept=".csv" (change)="readUrl($event)" data-title="Drag and drop a file">
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<div class="downloadSampleFile"><a href="assets/images/Samplefile.csv" target="_blank">Download Sample File</a></div>
+					<div [ngStyle]="{'display':bulkUploadLoaderDisplay}" class="loader"></div>
+					<button type="submit" class="btn btn-primary" id="bulkUploadBtn" (click)="bulkUploadAP()">Upload</button>
+					<button type="button" class="btn btn-secondary" id="cancelBulkUploadBtn" data-dismiss="modal" (click)="cancelBulkUpload()">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Display Bulk Upload Validation & API Response Start here-->
+<div class="modal fade" id="bulkApResponse">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Alert</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body bulkResBody">
+					<div *ngIf="bulkApResponseMessage.length != 0" class="body-content BulkAPRes">
+						<div *ngFor="let reMessage of bulkApResponseMessage">
+							<label>{{reMessage}}</label>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okaddAPBtn" data-dismiss="modal" (click)="okAddAP()">Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Display Bulk Upload Validation & API Response End here-->
+
+<div id="openAddAPpopup" data-toggle="modal" data-target="#confirmAddAPModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmAddAPModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{addAPTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div *ngIf="resMessageArr.length != 0" class="body-content BulkAPRes">
+						<div *ngFor="let reMessage of resMessageArr">
+							<label>{{reMessage}}</label>
+						</div>
+					</div>
+					<div *ngIf="resMessageArr.length == 0" class="body-content">
+						<div><label>{{addAPMessgae}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okaddAPBtn" data-dismiss="modal" (click)="okAddAP()">Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>

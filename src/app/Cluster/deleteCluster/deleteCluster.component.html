@@ -1,0 +1,62 @@
+<!-- The Modal -->
+<div class="modal fade" id="deleteClusterModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Delete Cluster</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="body-content" id="confirmDelete" *ngIf="deleteConfirm">
+					<div><label>Are you sure, you want to delete the cluster?</label></div>
+				</div>
+				<div class="body-content" id="confirmDelete" *ngIf="selectConfirm">
+					<div><label>Please select at least one cluster to delete</label></div>
+				</div>
+				<div class="body-content" id="confirmDelete" *ngIf="apConfirm">
+					<div><label>Please delete all the APs in the clusters, before deleting it</label></div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" (click)="deleteCluster()" id="deleteBtn" *ngIf="deleteConfirm" >Yes! Delete</button>
+				<button type="button" class="btn btn-secondary" id="CancelBtn" (click)="cancel()" >Cancel</button>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div id="openDeleteClusterpopup" data-toggle="modal" data-target="#confirmDeleteClusterModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmDeleteClusterModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{deleteAPTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="body-content">
+						<div><label>{{deleteAPMessage}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okDeleteClusterBtn" data-dismiss="modal" (click)="okDeleteCluster()">Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>

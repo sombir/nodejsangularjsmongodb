@@ -1,0 +1,11 @@
+{
+  "apps" : [
+   {
+     "script"          : "./bin/www"
+   },
+   {
+     "script"          : "appbackprocess.js"
+   }
+  ]
+}
+

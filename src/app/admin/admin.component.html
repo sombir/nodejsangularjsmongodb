@@ -1,0 +1,140 @@
+<div class="mainBody">
+  <div class="adminHeader">
+    System Settings
+  </div> 
+  <div class="subBody">  
+    <table>
+      <thead hidden="true">
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="headerRow">
+          <th><div class="headerTitle">Discovery</div></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>
+            <span class="textDics">Allow Unregistered AP join default cluster </span>
+          </td>
+          <td>
+            <label for="allowUnregisteredAp">Enable</label>
+            <input type="checkbox" id="allowUnregisteredAp" ng-reflect-model="false" class="ng-untouched ng-pristine ng-valid">
+          </td>
+          <td>
+            <label for="defaultCluster">Default Cluster</label>
+            <select class="form-control dropDownOption" id="defaultCluster">
+              <option value="">Select Cluster</option>
+              <option value="{{cluster.ip}}" *ngFor="let cluster of clusterList">{{cluster.name}}</option>
+            </select>
+          </td>
+          <td align="right"><button type="button" class="btn btn-basic updateBtn" (click)="updateDiscovery()">Update</button></td>
+        </tr>
+        <tr class="headerRow">
+          <th><div class="headerTitle">Time Zone</div></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td><span class="textDics">Select time zone</span></td>
+          <td>
+            <select class="form-control dropDownOption" id="timeZone">
+              <option value="">Select time zone</option>
+              <option value="UTC-09:00">Hawaii–Aleutian Time Zone</option>
+              <option value="UTC-08:00">Alaska Time Zone</option>
+              <option value="UTC-07:00">Pacific Time Zone</option>
+              <option value="UTC-06:00">Mountain Time Zone</option>
+              <option value="UTC-05:00">Central Time Zone</option>
+              <option value="UTC-04:00">Eastern Time Zone</option>
+            </select>
+          </td>
+          <td></td>
+          <td align="right"><button type="button" class="btn btn-basic updateBtn" (click)="updateTimeZone()">Update</button></td>
+        </tr>
+        <tr class="headerRow">
+          <th><div class="headerTitle">Custom Logo</div></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td><span class="spanLogo" *ngIf="imagePreview; else uploadedLogo"><img src="{{imagePreview}}" class="logo" id="Ruckus_Wireless_Logo" alt="Ruckus_Wireless_Logo_Preview"></span>
+            <ng-template #uploadedLogo><span class="spanLogo"><img src="../assets/images/Charter_Communications_Logo.png" class="logo" id="Ruckus_Wireless_Logo" alt="Ruckus_Wireless_Logo"></span></ng-template>
+          </td>
+          <td><input type="file" name="images" accept="image/png" class="btn" value="Upload New Logo" (change)="onFileInput($event)"></td>
+          <td></td>
+          <td align="right"><button type="button" class="btn btn-basic updateBtn" (click)="onUpdateLogo()">Update</button></td>
+        </tr>
+        <tr class="headerRow">
+          <th><div class="headerTitle">Change Password</div></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td><span class="textDics">Admin</span></td>
+          <td><label for="curpswd">Current Password</label><input type="password" class="form-control textField" id="curpswd" name="curpswd" required></td>
+          <td><label for="newpswd">New Password</label><input type="password" class="form-control textField" id="newpswd" name="newpswd" required></td>
+          <td align="right"><button type="button" class="btn btn-basic updateBtn" (click)="updatePassword()">Update</button></td>
+        </tr>
+        <tr class="headerRow">
+          <th><div class="headerTitle">Config</div></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <label for="allowBackupScheduler">Enable Sync-Up</label><input type="checkbox" id="allowBackupScheduler" ng-reflect-model="false" class="ng-untouched ng-pristine ng-valid">
+          </td>
+          <td>
+            <label for="frequency">Frequency</label><select class="form-control dropDownOption" id="frequency">
+              <option value="">Select Frequency</option>
+              <option value="15min">15 minutes</option>
+              <option value="30min">30 minutes</option>
+              <option value="1hr">1 hour</option>
+              <option value="12hr">12 hours</option>
+              <option value="24hr">24 hours</option>
+              <option value="7days">7 days</option>
+            </select>
+          </td>
+          <td align="right"><button type="button" class="btn btn-basic updateBtn" (click)="updateConfig()">Update</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="overlay"><div id="listLoader"></div></div> 
+</div>
+<!-- The Modal -->
+<div class="modal fade" id="modelDialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{modelTitle}}</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="body-content">
+          <div>
+            <label>{{apiResponseMessage}}</label>
+          </div>
+        </div>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="okBtn" (click)="onOk()" >OK</button>
+      </div>
+
+    </div>
+  </div>
+</div>

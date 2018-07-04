@@ -1,0 +1,87 @@
+<div class="mainBody">
+	<div class="userHeader">
+		Users
+	</div>
+	<div class="subBody">
+		<div class="container-fluid">
+			<div class="actionBtns d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between">
+				<div class="btn-group container-fluid" role="group" aria-label="Basic example">
+					<!-- <button type="button" class="btn btn-default" id="refeshUserBtn" (click)="refreshUserList()" title="Refresh User List" alt="Refresh User List"></button> -->
+					<button type="button" class="btn btn-default" id="addUserBtn"  (click)="addUserBtn()" data-toggle="modal" data-target="#addUserModal" title="Add New User" alt="Add New User"></button>
+					<button type="button" class="btn btn-default" id="editUserBtn" [disabled]="btnEnabled" (click)="editUserBtn()" data-toggle="modal" data-target="#editUserModal" title="Edit User" alt="Edit User"></button>
+					<button type="button" class="btn btn-default" id="closeUserBtn" [disabled]="btnEnabled" (click)="deleteUserBtn()" data-toggle="modal" data-target="#deleteUserModal" title="Delete User" alt="Delete User"></button>
+				</div>
+			</div>
+		</div>
+		<div id="UserListTable">
+			<div class="container-fluid">
+				<div class="table-responsive">
+					<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered" id="userTable" width="100%">
+						<thead>
+						<!-- <tr style="border-bottom: 1px solid #F3F3F4 !important;text-align:center;">
+							<th colspan="6" style="border-right: 1px solid #F3F3F4 !important;">CDS</th>
+							<th colspan="3">Controller</th>
+						</tr> -->
+						<tr class="cancel_sorting">
+							<th class="sorting_disabled" style="width:50px !important;">
+								<div class="text-center">
+									<input type="checkbox" value="" id="selectAllCheck" [(ngModel)]="selectedAll" (change)="checkAllRows($event)" >
+								</div>
+							</th>
+							<th class="customWidth ">User Name</th>
+							<th class="customWidth">Email</th>
+							<th class="customWidth">User role</th>
+							<th class="customWidth">Time Zone</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let user of this.userList">
+							<td  class="text-center">
+								<input type="checkbox" value="" [(ngModel)]="user.selectcheckbox" (change)="checkSelectedRows(user,user.selectcheckbox)">
+							</td>
+							<td >{{user.username}}</td>
+							<td >{{user.email}}</td>
+							<td >{{user.role}}</td>
+							<td >{{user.timeZoneVal}}</td>
+						</tr> 
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
+<app-add-user [ngStyle]="{'display':displayAddUser}" (refreshEvent)="refreshEventAfterAdd($event)"></app-add-user>
+<app-edit-user [ngStyle]="{'display':displayEditUser}"></app-edit-user>
+<app-delete-user [ngStyle]="{'display':displayDeleteUser}"></app-delete-user>
+</div>
+
+<div id="openUserpopup" data-toggle="modal" data-target="#confirmUserModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmUserModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{userTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="body-content">
+						<div><label>{{userMessage}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okUserBtn" data-dismiss="modal" (click)="okUserBtnClicked()" >Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>

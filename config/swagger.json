@@ -1,0 +1,982 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is ruckus AP registration system to bring up new APs",
+    "version": "1.0.0",
+    "title": "Ruckus Accesspoint Registration",
+    "termsOfService": "http://ruckuswireless.com/terms/",
+    "contact": {
+      "name": "Ruckus",
+      "email": "support@ruckuswireless.com"
+    },
+    "license": {
+      "name": "License Ruckus wireless system",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath": "/",
+  "tags": [{
+    "name": "user",
+    "description": "Users accessing this system"
+  },{
+    "name": "AP",
+    "description": "Configure and get details of accesspoints"
+  }, {
+    "name": "Clusters",
+    "description": "Configure and get details of Clusters"
+  }, {
+    "name": "Admin Activity Logs",
+    "description": "Configure and get details of Clusters"
+  }],
+  "schemes": ["https"],
+  "paths": {
+    "/api/aps": {
+      "post": {
+        "tags": ["AP"],
+        "summary": "Add a new AP for discovery service",
+        "description": "",
+        "operationId": "addAP",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Add new AP for discovery",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/AddAP"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AddAPResponse"
+            }
+          }
+        },
+        "security":[{
+          "xAaccessToken": []
+        }]
+      },
+      "get": {
+        "tags": ["AP"],
+        "summary": "Get List of APs",
+        "description": "",
+        "operationId": "listAP",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "startindex",
+          "in": "query",
+          "description": "start index",
+          "required": false,
+          "type": "integer",
+		  "default": 1
+		},
+		{
+          "name": "numberofrows",
+          "in": "query",
+          "description": "number of rows",
+          "required": false,
+          "type": "integer",
+		  "default": 10
+		},
+		{
+          "name": "sortby",
+          "in": "query",
+          "description": "Sort By Column",
+          "required": false,
+          "type": "string",
+		  "default": "apserial"
+		},
+		{
+          "name": "sortorder",
+          "in": "query",
+          "description": "Sort By Order [1 => Asc, -1 => Desc]",
+          "required": false,
+          "type": "integer",
+		  "default": 1
+		},
+		{
+          "name": "search",
+          "in": "query",
+          "description": "Search text",
+          "required": false,
+          "type": "string"
+		}
+		],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AP"
+            }
+          }
+        },
+        "security":[{
+          "xAaccessToken": []
+        }]
+      }
+    },
+    "/api/aps/{apserial}": {
+      "get": {
+        "tags": ["AP"],
+        "summary": "Find AP by ID",
+        "description": "Returns a single AP",
+        "operationId": "getAPBySerial",
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "apserial",
+          "in": "path",
+          "description": "ID of AP",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AP"
+            }
+          }
+        },
+        "security": [{
+          "xAaccessToken": []
+        }]
+      },
+	  "put": {
+        "tags": ["AP"],
+        "summary": "Move AP by ID",
+        "description": "Move AP to zone",
+        "operationId": "moveAPBySerial",
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "apserial",
+          "in": "path",
+          "description": "ID of AP",
+          "required": true,
+          "type": "string"
+        },{
+          "in": "body",
+          "name": "body",
+          "description": "Move AP",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/MoveAP"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/MoveAPResponse"
+            }
+          }
+        },
+        "security": [{
+          "xAaccessToken": []
+        }]
+      }
+    },
+    "/api/aps/{apserial}/{deletefromvsz}": {
+      "delete": {
+        "tags": ["AP"],
+        "summary": "Deletes a AP",
+        "description": "",
+        "operationId": "deleteAP",
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "apserial",
+          "in": "path",
+          "description": "AP id to delete",
+          "required": true,
+          "type": "integer",
+          "format": "int64"
+        },
+          {
+            "name": "deletefromvsz",
+            "in": "path",
+            "description": "AP serial number to delete. By default it is not removed from vSZ",
+            "required": true,
+            "type": "string",
+            "default":"false"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DeleteAPResponse"
+            }
+          }
+        },
+        "security": [{
+          "xAaccessToken": []
+        }]
+      }
+    },
+	"/api/unmanagedaps": {
+      "get": {
+        "tags": ["AP"],
+        "summary": "Get List of unmanagedaps APs",
+        "description": "",
+        "operationId": "unmanagedapsAPlist",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "startindex",
+          "in": "query",
+          "description": "start index",
+          "required": false,
+          "type": "integer",
+		  "default": 1
+		},
+		{
+          "name": "numberofrows",
+          "in": "query",
+          "description": "number of rows",
+          "required": false,
+          "type": "integer",
+		  "default": 10
+		},
+		{
+          "name": "sortby",
+          "in": "query",
+          "description": "Sort By Column",
+          "required": false,
+          "type": "string",
+		  "default": "apserial"
+		},
+		{
+          "name": "sortorder",
+          "in": "query",
+          "description": "Sort By Order [1 => Asc, -1 => Desc]",
+          "required": false,
+          "type": "integer",
+		  "default": 1
+		},
+		{
+          "name": "search",
+          "in": "query",
+          "description": "Search text",
+          "required": false,
+          "type": "string"
+		}
+		],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AP"
+            }
+          }
+        },
+        "security":[{
+          "xAaccessToken": []
+        }]
+      }
+    },
+    "/api/bulkapupload": {
+      "post": {
+        "tags": ["AP"],
+        "summary": "Add multiple APs",
+        "description": "",
+        "operationId": "bulkapupload",
+        "consumes": ["text/plain"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Add multiple APs for discovery \nExample: \napserial,clusterip,apname,zonename \n828891502673,10.150.84.45,test1,cdstest \n230645137735,10.150.84.45,test2,cdstest",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/UploadAP"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/BulkAPUpload"
+            }
+          }
+        },
+        "security": [{
+          "xAaccessToken": []
+        }]
+      }
+    },
+    "/api/login": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Created user object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/UserAuth"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "X-Rate-Limit": {
+                "type": "integer",
+                "format": "int32",
+                "description": "calls per hour allowed by the user"
+              },
+              "X-Expires-After": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/api/controllers": {
+      "post": {
+        "tags": ["Clusters"],
+        "summary": "Add new Cluster",
+        "description": "",
+        "operationId": "addcluster",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Add new Cluster",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/AddCluster"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AddClusterResponse"
+            }
+          }
+        },
+        "security":[{
+          "xAaccessToken": []
+        }]
+      },
+      "get": {
+        "tags": ["Clusters"],
+        "summary": "Get List of Clusters",
+        "description": "",
+        "operationId": "listClusters",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Cluster"
+            }
+          }
+        },
+        "security":[{
+          "xAaccessToken": []
+        }]
+      }
+
+    },
+    "/api/controllers/{IPAddress}" : {
+      "delete": {
+        "tags": ["Clusters"],
+        "summary": "Deletes a Cluster",
+        "description": "",
+        "operationId": "deleteCluster",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "IPAddress",
+            "in": "path",
+            "description": "Cluster IP to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DeleteCluster"
+            }
+          },
+		  "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Cluster not found"
+          }
+        },
+        "security": [
+          {
+            "xAaccessToken": []
+          }
+        ]
+      },
+	  "put": {
+        "tags": ["Clusters"],
+        "summary": "Edit a Cluster",
+        "description": "",
+        "operationId": "EditCluster",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "IPAddress",
+            "in": "path",
+            "description": "Cluster IP",
+            "required": true,
+            "type": "string"
+          },
+		  {
+          "in": "body",
+          "name": "body",
+          "description": "Edit Cluster",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/AddCluster"
+          }
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UpdateClusterResponse"
+            }
+          },
+		  "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Cluster not found"
+          }
+        },
+        "security": [
+          {
+            "xAaccessToken": []
+          }
+        ]
+      },
+      "get": {
+        "tags": ["Clusters"],
+        "summary": "Get a Cluster info",
+        "description": "",
+        "operationId": "getCluster",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "IPAddress",
+            "in": "path",
+            "description": "Cluster IP to get info",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Cluster"
+            }
+          },
+		  "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Cluster not found"
+          }
+        },
+        "security": [
+          {
+            "xAaccessToken": []
+          }
+        ]
+      }
+
+    },
+	"/api/importclusteraps": {
+      "post": {
+        "tags": ["Clusters"],
+        "summary": "Import Cluster APs",
+        "description": "",
+        "operationId": "importclusteraps",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Import Cluster APs",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/ImportAPsCluster"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ImportClusterAPResponse"
+            }
+          }
+        },
+        "security":[{
+          "xAaccessToken": []
+        }]
+      }
+    },
+	"/api/deleteclusteraps/{clustername}": {
+      "delete": {
+        "tags": ["Clusters"],
+        "summary": "Delete all the cluster APs",
+        "description": "",
+        "operationId": "deleteclusteraps",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "in": "path",
+          "name": "clustername",
+          "description": "Enter cluster name to delete all of the APs from cds",
+          "required": true,
+		  "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DeleteClusterAPResponse"
+            }
+          }
+        },
+        "security":[{
+          "xAaccessToken": []
+        }]
+      }
+    },
+	"/api/adminactivitieslist": {
+      "get": {
+        "tags": ["Admin Activity Logs"],
+        "summary": "Get List of admin activities",
+        "description": "",
+        "operationId": "adminactivitieslist",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [{
+          "name": "startindex",
+          "in": "query",
+          "description": "start index",
+          "required": false,
+          "type": "integer",
+		  "default": 1
+		},
+		{
+          "name": "numberofrows",
+          "in": "query",
+          "description": "number of rows",
+          "required": false,
+          "type": "integer",
+		  "default": 10
+		},
+		{
+          "name": "sortby",
+          "in": "query",
+          "description": "Sort By Column",
+          "required": false,
+          "type": "string",
+		  "default": "activitytime"
+		},
+		{
+          "name": "sortorder",
+          "in": "query",
+          "description": "Sort By Order [1 => Asc, -1 => Desc]",
+          "required": false,
+          "type": "integer",
+		  "default": -1
+		},
+		{
+          "name": "search",
+          "in": "query",
+          "description": "Search text",
+          "required": false,
+          "type": "string"
+		}
+		],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security":[{
+          "xAaccessToken": []
+        }]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "xAaccessToken": {
+      "type": "apiKey",
+      "name": "x-access-token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "UserAuth": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "admin"
+        },
+        "password": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    },
+    "AP": {
+      "type": "object",
+      "required": ["apserial", "clusterid","mac","apname","zonename","zoneid","username"],
+      "properties": {
+        "apserial": {
+          "type": "integer",
+          "format": "int64",
+          "example": "450000000999"
+        },
+        "apname": {
+          "type": "string",
+          "example": "Test45_999"
+        },
+        "zonename": {
+          "type": "string",
+          "example": "Staging Zone"
+        },
+        "clusterid": {
+          "type": "string",
+          "example": "5a5de6275400fa0d0cf07eda"
+        },
+        "mac": {
+          "type": "string",
+          "example": "F0:B0:52:20:8C:E0"
+        },
+        "zoneid": {
+          "type": "string",
+          "default": "8af923cf-6457-4f45-acf8-490ccba5a519"
+        },
+        "connectionstate": {
+          "type": "string",
+          "example": "Provisioned",
+          "enum": ["Discovery","Connect","Rebooting","Disconnect","Provisioned"]
+        },
+        "lastsynchtime": {
+          "type": "string",
+          "example": "2018-01-16T11:46:49.629Z"
+        },
+        "last_contacted": {
+          "type": "string",
+          "example": "2018-01-16T11:46:49.629Z"
+        },
+        "last_modified": {
+          "type": "string",
+          "example": "2018-01-16T11:46:49.629Z"
+        },
+        "username": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    },
+    "AddAP": {
+      "type": "object",
+      "required": ["apserial"],
+      "properties": {
+        "apserial": {
+          "type": "integer",
+          "format": "int64",
+          "example": "450000000999"
+        },
+        "clusterip": {
+          "type": "string",
+          "example": "10.150.84.45"
+        },
+        "apname": {
+          "type": "string",
+          "example": "TestAP"
+        },
+        "zonename": {
+          "type": "string",
+          "example": "TestZone"
+        }
+      }
+    },
+	"AddAPResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "AP added successfully"
+        }
+      }
+    },
+    "MoveAP": {
+      "type": "object",
+      "properties": {
+        "clusterip": {
+          "type": "string",
+          "example": "10.150.84.45"
+        },
+        "apname": {
+          "type": "string",
+          "example": "TestAP"
+        },
+        "zonename": {
+          "type": "string",
+          "example": "TestZone"
+        }
+      }
+    },
+	"MoveAPResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "AP updated successfully"
+        }
+      }
+    },
+	"DeleteAPResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "AP deleted successfully"
+        }
+      }
+    },
+	"BulkAPUpload": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "5 APs added, 0 APs failed"
+        }
+      }
+    },
+	"ImportClusterAPResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "Cluster APs data imported successfully"
+        }
+      }
+    },
+	"DeleteClusterAPResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "5 APs deleted, 0 APs failed"
+        }
+      }
+    },
+    "AddCluster": {
+      "type": "object",
+      "required": ["ip","name","loginid","password"],
+      "properties": {
+        "ip": {
+          "type": "string",
+          "format": "10.150.84.45",
+          "example": "10.150.84.45"
+        },
+        "name": {
+          "type": "string",
+          "example": "RuckusOffice1"
+        },
+        "loginid": {
+          "type": "string",
+          "example": "admin"
+        },
+        "password": {
+          "type": "string",
+          "example": "myap"
+        }
+      }
+    },
+	"AddClusterResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "Cluster created successfully"
+        }
+      }
+    },
+	"UpdateClusterResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "Cluster updated successfully"
+        }
+      }
+    },
+	"DeleteCluster": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "true"
+        },
+        "message": {
+          "type": "string",
+          "example": "Cluster deleted successfully"
+        }
+      }
+    },
+	 "ImportAPsCluster": {
+      "type": "object",
+      "properties": {
+        "clusterip": {
+          "type": "string",
+          "format": "10.150.84.45",
+		  "example": "10.150.84.45"
+        }
+      }
+    },
+    "Cluster": {
+      "type": "object",
+      "required": ["ip","name","loginid","password","username"],
+      "properties": {
+        "ip": {
+          "type": "string",
+          "example": "10.150.84.45"
+        },
+        "name": {
+          "type": "string",
+          "example": "RuckusOffice1"
+        },
+        "loginid": {
+          "type": "string",
+          "example": "admin"
+        },
+        "password": {
+          "type": "string",
+          "example": "myap"
+        },
+        "tag": {
+          "type": "string",
+          "example": "myap"
+        },
+        "managementips": {
+          "type": "array",
+          "items": {"type":"string"},
+          "example": "[10.150.84.45]"
+        },
+        "controllerips": {
+          "type": "array",
+          "items": {"type":"string"},
+          "example": "[10.150.84.45]"
+        },
+        "zones": {
+          "type": "array",
+          "items": {"type":"string"},
+          "example": "[{id: b4187899-38ae-4ace-8e40-0bc444455156,name: Staging Zone}]"
+        },
+        "numberofaps": {
+          "type": "string",
+          "example": "2"
+        },
+        "defaultcluster": {
+          "type": "string",
+          "example": "false"
+        },
+        "status": {
+          "type": "integer",
+          "example": "1",
+          "enum": [1,0]
+        },
+        "stats": {
+          "type": "string",
+          "example": "true"
+        },
+        "lastsynchtime": {
+          "type": "string",
+          "example": "2018-01-16T11:46:49.629Z"
+        },
+        "creationtime": {
+          "type": "string",
+          "example": "2018-01-16T11:46:49.629Z"
+        },
+        "last_modified": {
+          "type": "string",
+          "example": "2018-01-16T11:46:49.629Z"
+        },
+        "username": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    },
+    "UploadAP": {
+      "type": ""
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

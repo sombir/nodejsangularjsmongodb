@@ -1,0 +1,154 @@
+<div id="chartView" (window:resize)="makeResponsive()">
+	<div class="container-fluid">
+		<h3 class="heading">Dashboard</h3><br>
+		<div class="row dashboard-row">
+			<div class="col-sm-12 col-md-6 col-lg-3 infoBlock pointer" align="center" [routerLink]="['../inventory']"  >
+				<div class="blockcontainer">
+					<p class="infoData total-text"><strong>SmartZone Clusters</strong></p>
+					<div class="infoData total-number"><strong>{{no_of_clusters}}</strong></div>
+				</div>
+			</div>	
+			<div class="col-sm-12 col-md-6 col-lg-3 infoBlock  pointer" (click)="goToAPList()" >
+				<div class="blockcontainer">
+					<p class="infoData total-text"><strong>Access Points</strong></p>
+					<div class="infoData total-number"><strong>{{no_of_aps}}</strong></div>
+				</div>
+			</div>	
+			<div class="col-sm-12 col-md-6 col-lg-3 infoBlock">
+				<div class="blockcontainer">
+				<p class="infoData total-text"><strong>Clients</strong></p>
+				<div class="infoData total-number"><strong>{{no_of_clients}}</strong></div>
+				</div>
+			</div>	
+			<div class="col-sm-12 col-md-6 col-lg-3 infoBlock" align="center">
+				<div class="blockcontainer">
+					<p class="infoData total-text"><strong>AP License Usage</strong></p>
+					<div #gaugeLicenseState class = "gauge-chart">
+						<div class="plot-container plotly" id = "myDiv" align="center"></div>
+					</div>	
+				</div>					
+			</div>
+		</div>
+	</div><br>
+	<div class="row tab-row" align="center">
+		<div class="col-12">
+			<ul class="nav nav-tabs justify-content-end" role="tablist">
+				<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Operations</a></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">Stats</a></li>
+			</ul>
+			<div class="tab-content py-4 panel-color">
+				<div class="tab-pane active" id="tab1" role="tabpanel">
+					<div class="container-fluid">
+						<div class="row chart-row">
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #doughnutCRState id="doughnutCRState">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #doughnutCPState id="doughnutCPState">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #doughnutDPState id="doughnutDPState">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #barClusterAPErrors id="barClusterAPErrors">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #doughnutAPState id="doughnutAPState">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #doughnutAPProvision id="doughnutAPProvision">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+						</div>
+						<!-- <div class="row">
+							<div class="col-sm-12 col-md-6 col-lg-12 chartBlock">
+								<div #APDiscoveryTrends id="APDiscoveryTrends">
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				<div class="tab-pane" id="tab2" role="tabpanel">
+					<div class="container-fluid">
+						<div class = "row chart-row">
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #barClusterAPCount id="barClusterAPCount">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #barClusterClientCount id="barClusterClientCount">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #barAPLicenseUsed id="barAPLicenseUsed">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #doughnutOSType id="doughnutOSType">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #doughnutAPModels id="doughnutAPModels">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+								<div #doughnutAPModelDistribution id="doughnutAPModelDistribution">
+									<!-- Chart will appear here -->
+								</div>
+							</div>
+						</div>
+						<!--<div class = "row">
+							<div class="col-sm-12 col-md-6 col-lg-12 chartBlock">
+								<div #APDeploymentTrends id="APDeploymentTrends">
+								</div>
+							</div>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Loader Overlay -->
+<div id="overlay"><div id="listLoader"></div></div>
+
+ <div class="modal fade" id="homeModelDialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{modelTitle}}</h4>
+				<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="body-content">
+                    <div>
+                        <label>{{modelMessage}}</label>
+                    </div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" id="okBtn" (click)="onOk()" >OK</button>
+			</div>
+			
+		</div>
+	</div>
+</div>

@@ -1,0 +1,167 @@
+#Ruckus_Wireless_Logo{
+  width: 102px;
+  height: 35px;
+}
+
+#headerMenu{
+	display: -webkit-inline-box;
+	margin-right:10px;
+}
+
+.navbar {
+  background-color: white;
+  width: 100%;
+  z-index: 25;
+  position: fixed;
+  top: 0;
+}
+.central-discovery-system {
+	font-size: 1rem;
+	color: #919191;
+}
+.clock {
+  cursor: pointer;
+}
+.triangle {
+  cursor: pointer;
+}
+.user {
+  cursor: pointer;
+}
+.question {
+  cursor: pointer;
+}
+
+.highlight-item {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.w3-btn,.w3-button{border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+.w3-btn,.w3-button{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}   
+.w3-sidebar{
+
+  height:250%;
+  width:200px;
+  top: 62px;
+  background-color:#343a40;
+  position:fixed!important;
+  z-index:2;
+  overflow:auto;
+}
+.w3-main,#main{
+  transition:margin-left .4s;
+  margin-top: 78px;
+}
+.w3-bar-block .w3-bar-item{
+  width:100%;
+  display:block;
+  /* padding:8px 16px; */
+  text-align:left;
+  border:none;
+  white-space:normal;
+  float:none;
+  background-color: #212529;
+  color:lightgrey;
+  /* border: 1px solid #909090;*/
+  height: 54px;
+  padding-left: 2rem;
+  padding-top: 1rem;
+  border-bottom: 1px solid #343a40;
+
+}
+.w3-bar-block.w3-center .w3-bar-item{text-align:center}.w3-block{display:block;width:100%}
+.w3-container:after,.w3-container:before{content:"";display:table;clear:both}
+@media (min-width:993px){.w3-modal-content{width:900px}.w3-hide-large{display:none!important}.w3-sidebar.w3-collapse{display:block!important}}
+@media (max-width:992px){.w3-sidebar.w3-collapse{display:none}.w3-main{margin-left:0!important;margin-right:0!important}}
+.w3-container{margin-top:16px;margin-bottom:16px}
+.w3-card{box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)}
+.w3-animate-left{position:relative;animation:animateleft 0.4s}@keyframes animateleft{from{left:-300px;opacity:0} to{left:0;opacity:1}}
+.w3-button:hover{color:#000!important;background-color:#ccc!important}
+.w3-bar-block.w3-bar-item:hover{color:red!important;background-color:yellow!important}
+
+
+.sidebar-dropdown {
+    color: #909090;
+    margin-left: 5%;
+    font-size: 14px;
+    font-family: "Trebuchet MS",helvetica,arial,sans-serif;
+}
+
+.userIconDropdown {
+  position: absolute;
+  right: 65px;
+  bottom: 10px;
+}
+.userIconBtm {
+  background-color: white;
+  box-shadow: none;
+  font-size: 23px;
+  cursor: pointer;
+}
+.usericon {
+  color: #909090;
+}
+.userIconItem {
+  z-index: 100;
+  cursor: pointer;
+}
+.questIcon {
+  color: #909090;
+  font-size: 21px;
+}
+.userIconMenu {
+  min-width: 1rem;
+  z-index: 100;
+} 
+
+#okBtn{
+  background-color: #5A96CF;
+  color: #FFFFFF;
+  border-radius: 0px;
+  border-color: #5A96CF;
+}
+
+#cancelBtn{
+  background-color: #A9A9A9;
+  color: #262121;
+  border-color: #A9A9A9;
+  border-radius: 0px; 
+}
+
+.modal-content{
+  border-radius: 0px;
+}
+
+.modal-body{
+  padding: 0px 15px 0px 15px;
+}
+
+.body-content {
+    background-color: #F4F4F4;
+    padding: 2%;
+}
+.appversion{
+	color: #FFFFFF;
+	padding-left : 16px;
+	text-decoration : none;
+	cursor : default;
+}
+.appversiontext{
+	color: #fff;
+	text-decoration : none;
+}
+
+.submenu-margin{
+  margin-left: 10%;
+}
+
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+    font-family: 'FontAwesome';
+    content: "\f0da";   
+    float: right;
+}
+
+a[aria-expanded="true"]::before {
+    content: "\f0d7"; 
+}

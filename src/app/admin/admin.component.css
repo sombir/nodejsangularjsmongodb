@@ -1,0 +1,135 @@
+    .mainBody{
+        background-color: #D8DFE7;
+        margin-top: -15px;
+    }
+    .subBody{
+        padding:2.1% 2% 1% 2%;
+        margin: 1% 2% 1% 2%;
+        overflow-x:auto;
+        background-color: #EFF3F4;
+    }
+    .adminHeader{
+        font-size: 35px;
+        font-family: "Helvetica Neue",helvetica,arial,sans-serif;
+        color: #797979;
+        font-weight: bold;
+        margin-left: 2%;
+        padding-top: 10px;
+    }
+
+    table{
+    }
+
+    table>thead>tr>th{
+        width: 25% !important;
+    }
+
+    table, tbody, tr {
+        width: 100%;
+    }
+
+
+    .headerRow{
+        background-color: #E6E8E8;
+        height:40px;
+    }
+
+    .headerTitle{
+        padding-left: 40px;
+        font-size: 18px;
+        font-family: "Helvetica Neue",helvetica,arial,sans-serif;
+        color: #7F7F7F;
+        font-weight: bold;
+    }
+
+    tbody tr:nth-child(even){
+      height: 80px !important;
+      /*font-size: 14px !important;*/
+  }
+
+  tbody tr:nth-child(even) td{
+      font-size: 14px !important;
+  }
+
+  .textDics{
+    font-size: 14px;
+    padding-left: 42px;
+}
+
+input[type="file"]{
+    width: 75%;
+    padding: 0px;
+}
+
+#defaultCluster, #frequency{
+    margin: 3%;
+    width: 165px !important;
+    display: inline;
+}
+
+#frequency{
+    margin-left: 12%;
+}
+
+#allowUnregisteredAp, #allowBackupScheduler{
+    margin: 5%;
+}
+
+.dropDownOption {
+    width: auto;
+}
+.updateBtn{
+    background-color: #C0C0C0;
+    border-radius: 0px;
+}
+
+.spanLogo{
+    padding-left: 42px;
+}
+.logo{
+    max-width: 100%;
+    max-height: 100%;
+    width: 102px;
+    height: 35px;
+}
+
+.modal-content{
+  border-radius: 0px;
+}
+
+.modal-body{
+  padding: 0px 15px 0px 15px;
+}
+
+.body-content {
+    background-color: #F4F4F4;
+    padding: 2%;
+}
+
+#okBtn{
+  background-color: #5A96CF;
+  color: #FFFFFF;
+  border-radius: 0px;
+  border-color: #5A96CF;
+}
+
+#curpswd, #newpswd{
+    width: 162px;
+    margin: 5% 0% 5% 4%;
+    display: inline;
+}
+
+.btn-primary{
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    font-size: 12px;
+    float: right;
+    margin-top: -31px;
+    margin-right: 32px;
+}
+
+#timeZone{
+    padding: .375rem 0.25rem !important;
+    width: 287px;
+}

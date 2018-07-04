@@ -1,0 +1,110 @@
+<div class="modal fade" id="editClusterModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Cluster</h4>
+				<button type="button" class="close" aria-label="Close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			
+			<form novalidate [formGroup]="editClusterForm" >
+				<div class="modal-body">
+					<div class="body-content" *ngIf="singleEditconfirm">
+						<div class="form-group">
+							<label for="clusterEditName">Cluster Name</label>
+							<input type="text" class="form-control" id="clusterEditName" placeholder="Enter Cluster Name" name="clusterEditName" disabled="true" value={{clusterName}}>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': clusterMgmtIP.invalid && (clusterMgmtIP.dirty || clusterMgmtIP.touched), 'has-success': clusterMgmtIP.valid && (clusterMgmtIP.dirty || clusterMgmtIP.touched) }">
+							<label for="clusterEditIp">Management Host Name / (or IP address)</label>
+							<input type="text" class="form-control" id="clusterEditIp" placeholder="Enter Cluster IP Address" name="clusterEditIp" (focusout)="checkdnslookup()" formControlName="clusterMgmtIP">
+							<div class="form-control-feedback" *ngIf="clusterMgmtIP.errors && (clusterMgmtIP.dirty || clusterMgmtIP.touched)">
+								<p *ngIf="clusterMgmtIP.errors.required">Cluster Hostname/IP is required.</p>
+								<p *ngIf="clusterMgmtIP.errors.lengthError">Cluster Hostname/IP length cannot be more than 255.</p>
+								<p *ngIf="clusterMgmtIP.errors.patternError">Cluster Hostname/IP should be valid.</p>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': clusterLoginID.invalid && (clusterLoginID.dirty || clusterLoginID.touched), 'has-success': clusterLoginID.valid && (clusterLoginID.dirty || clusterLoginID.touched) }">
+							<label for="clusterEditLoginid">Login ID</label>
+							<input type="text" class="form-control" id="clusterEditLoginid" placeholder="Enter Login ID" name="clusterEditLoginid" formControlName="clusterLoginID" required>
+							<div class="form-control-feedback" *ngIf="clusterLoginID.errors && (clusterLoginID.dirty || clusterLoginID.touched)">
+								<p *ngIf="clusterLoginID.errors.required">Cluster Login ID is required.</p>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': clusterPassword.invalid && (clusterPassword.dirty || clusterPassword.touched), 'has-success': clusterPassword.valid && (clusterPassword.dirty || clusterPassword.touched) }">
+							<label for="clusterEditPwd">Password</label>
+							<input type="password" class="form-control" id="clusterEditPwd" placeholder="Enter Password" name="clusterEditPwd" formControlName="clusterPassword" required>
+							<div class="form-control-feedback" *ngIf="clusterPassword.errors && (clusterPassword.dirty || clusterPassword.touched)">
+								<p *ngIf="clusterPassword.errors.required">Cluster Password is required.</p>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': clusterTag.invalid && (clusterTag.dirty || clusterTag.touched), 'has-success': clusterTag.valid && (clusterTag.dirty || clusterTag.touched) }">
+							<label for="clusterEditTag">Tag</label>
+							<input type="text" class="form-control" id="clusterEditTag" placeholder="Enter Tag" name="clusterEditTag" formControlName="clusterTag">
+							<div class="form-control-feedback" *ngIf="clusterTag.errors && (clusterTag.dirty || clusterTag.touched)">
+								<p *ngIf="clusterTag.errors.lengthError">Tag length cannot be more than 32.</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="clusterEditImportAP">Import AP</label>
+								<br>
+								<label class="switch">
+									<input type="checkbox" class="form-control" id="clusterEditImportAP" formControlName="clusterImportAP" [checked]='clusterImport'>
+									<span class="slider round"></span>
+								</label>
+							</div>
+							<div class="form-group col-6">
+								<label for="clusterEditDefaultCluster">Default Cluster</label>
+								<br>
+								<label class="switch">
+									<input type="checkbox" class="form-control" id="clusterEditDefaultCluster" formControlName="clusterDefaultCluster" [checked]='clusterDefault'>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="body-content" *ngIf="noEditConfirm">
+						<div><label>Please select one cluster to edit.</label></div>
+					</div>
+				</div>
+
+				
+				<div class="modal-footer">
+					<div [ngStyle]="{'display':editLoaderDisplay}" class="loader"></div>
+					<button type="submit" class="btn btn-primary" (click)="testConnection()" data-toggle="modal" data-target="#loaderModal" id="testEditBtn" *ngIf="singleEditconfirm" >Test Connection</button>
+					<button type="submit" class="btn btn-primary" (click)="editClusterDetails()" data-toggle="modal" data-target="#loaderModal" id="editBtn" *ngIf="singleEditconfirm" >Update</button>
+					<button type="button" class="btn btn-outline-dark" (click)="cancelEdit()" data-dismiss="modal" id="cancelEditBtn">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div id="openEditCluserpopup" data-toggle="modal" data-target="#confirmEditClusterModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmEditClusterModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{{editClusterTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="body-content">
+						<div><label>{{editClustermessage}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okEditClusterBtn" data-dismiss="modal" (click)="okEditCluster()">Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+

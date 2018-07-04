@@ -1,0 +1,130 @@
+#clusterBody{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	padding-left: 1%;
+	padding-right: 1%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	background-color: #F3F3F4;
+}
+
+button {
+	width: 100%;
+}
+
+.clusterBtns{
+	display: -webkit-inline-box;
+	max-height: 30px;
+	margin-left:1%;
+}
+
+.btn-group{
+	height: 24px;
+	float: left;
+	clear: left;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.btn-group>.btn:last-child:not(:first-child) {
+    border-radius: 0;
+}
+
+#totalClusterCount{
+	max-width: 35%;
+	margin-left: 5px;
+	margin-right: 1.5%;
+	float: right;
+	clear: right;
+}
+
+.input-group{
+	margin-left: 5px;
+	margin-right: 5px;
+	max-width: 39%;
+	float: right;
+	clear: right;
+}
+
+.btn{
+	border-color: #CCCCCC;
+	background-color: #FFFFFF;
+	padding: 0px;
+}
+
+#refeshBtn{
+	width: 24px;
+	height: 24px;
+	background-image: url('../../assets/images/refresh.png');
+	background-size: 15px 15px;
+	background-repeat:no-repeat;
+	background-position:center center;
+	margin-right: 4px;
+	border-radius: 0px
+}
+
+#addBtn{
+	width: 24px;
+	height: 24px;
+	background-image: url('../../assets/images/add.svg');
+	background-size: 36px 36px;
+	background-repeat:no-repeat;
+	background-position:center center;
+	margin-right: 4px;
+}
+
+#editBtn{
+	width: 24px;
+	height: 24px;
+	background-image: url('../../assets/images/edit.svg');
+	background-size: 40px 40px;
+	background-repeat:no-repeat;
+	background-position:center center;
+	margin-right: 4px;
+}
+
+#deleteBtn{
+	width: 24px;
+	height: 24px;
+	background-image: url('../../assets/images/trash.svg');
+	background-size: 15px 16px;
+	background-repeat:no-repeat;
+	background-position:center center;
+	margin-right: 4px;
+}
+
+#importBtn{
+	width: 24px;
+	height: 24px;
+	background-image: url('../../assets/images/import.png');
+	background-size: 17px 15px;
+	background-repeat:no-repeat;
+	background-position:center center;
+	margin-right: 4px;
+}
+
+.modal-content{
+  border-radius: 0px;
+}
+
+.modal-body{
+  padding: 0px 15px 0px 15px;
+}
+
+.body-content {
+    background-color: #F4F4F4;
+    padding: 2%;
+}
+
+#okBtn{
+	background-color: #5A96CF;
+	color: #FFFFFF;
+	border-radius: 0px;
+	border-color: #5A96CF;
+	width: 10%;
+	padding: 1.5%;
+}
+.crossBtn{
+	width: 15%;
+}
+

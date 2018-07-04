@@ -1,0 +1,41 @@
+.body-content
+{
+    background-color : #F4F4F4;
+    padding : 2%;
+}
+
+#deleteUserBtn{
+  background-color: #5E5E5E;
+  color: #FFFFFF;
+  border-color: #5E5E5E;
+  border-radius: 0px;
+}
+
+#cancelDelete{
+  background-color: #A9A9A9;
+  color: #262121;
+  border-color: #A9A9A9;
+  border-radius: 0px;
+}
+
+.modal-content{
+  border-radius: 0px;
+}
+
+.modal-body{
+  padding: 0px 15px 0px 15px;
+}
+
+#primaryBtn{
+  background-color: #5A96CF;
+  color: #FFFFFF;
+  border-radius: 0px;
+  border-color: #5A96CF;
+}
+
+#cancelBtn{
+  background-color: #A9A9A9;
+  color: #262121;
+  border-color: #A9A9A9;
+  border-radius: 0px;
+}

@@ -1,0 +1,132 @@
+<div class="mainBody">
+   <div class="logsHeader">
+      Application Logs
+   </div>
+   <div class="subBody">
+      <div class="table-responsive">
+         <table>
+            <tr>
+               <th class="tableHeader logLogo">Logs Settings</th>
+               <th></th>
+               <th></th>
+               <th></th>
+               <th></th>
+            </tr>
+              <tr class="disc">
+               <td>
+                  <div class="textField">Enabled&nbsp;&nbsp;<input type="checkbox" id="filelogenabled" ng-reflect-model="false" class="ng-untouched ng-pristine ng-valid"></div>
+               </td>
+               <td>
+                  <div class="textField"><span>Severity : </span>
+                     <select class="form-control dropDownOption" id="severitySelectboxFile">
+                        <!-- <option value="">Severity</option> -->
+                        <option value="error">Error</option>
+                        <option value="warn">Warn</option>
+                        <option value="info">Info</option>
+                        <option value="debug">Debug</option>
+                     </select>
+                  </div>
+               </td>
+               <td>
+                 <div class="textField"><span>File Size : </span>
+                     <select class="form-control dropDownOption" id="filesize">
+                        <!-- <option value="">File Size</option> -->
+                        <option value="5">5 MB</option>
+                        <option value="10">10 MB</option>
+                     </select>
+                  </div>
+                </td>
+                <td>
+                 <div class="textField"><span>Max Number : </span>
+                     <select class="form-control dropDownOption" id="maxfiles">
+                        <!-- <option value="">Max No. of Files</option> -->
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                     </select>
+                  </div>
+                </td>
+               <td style="text-align: right;"><button type="button" class="btn btn-basic updateBtn" (click)="updateConfig()">Update</button></td>
+            </tr>
+         </table>
+      </div>
+        <table>
+            <tr>
+               <th class="tableHeader logLogo">Application Logs & Status</th>
+            </tr>
+        </table><br>
+        <div class="clusterBtns d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between align-button-grp">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-default" id="refeshBtn" (click)="refreshLogTableList()" title="Refresh Logs" alt="Refresh Config Backup Table"></button>
+            <button type="button" class="btn btn-default" [disabled] = "isDisabled" id="downloadBtn" (click)="downloadAllLogFiles()" title="Download Logs" alt="Download File"></button>
+          </div>
+        </div>
+        <div class="table-responsive">
+         <table class="table table-bordered"  width="100%" id="logTable">
+            <thead>
+               <tr>
+                  <th>
+                     <div class="text-center">
+                        <input type="checkbox" value="" id="selectAllCheck" [(ngModel)]="selectedAll" (change)="selectAll($event)">
+                     </div>
+                  </th>
+                  <th>Logs Type</th>
+                  <th align="center" class="graphics">Status</th>
+                  <th align="center" class="graphics">Log Levels</th>
+                  <th># of Logs</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let data of appLogsList">
+                  <td class="text-center"><input type="checkbox" value="" id="check_data{{data.type}}" [(ngModel)]="data.select" (change)="selectLog(data,data.select)" (click)="checkCheckbox(data.type)"></td>
+                  <td>{{data.type}}</td>
+                  <td align="center">{{data.status}}</td>
+                  <td align="center">{{data.level}}</td>
+                  <td>                    
+                    <a class = "numberColor" href="javascript:void(0)" (click)="showHideLogsFile(data.type)"><u>{{data.numberoffiles}}</u></a>
+                    <div class="hide" id="filelist_{{data.type}}">
+                      <div *ngFor="let file of data.files">
+                        <a class = "numberColor" href="javascript:void(0)" (click)="downloadLogFile(file)">{{file}}</a>
+                      </div>
+                    </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="modelDialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{modelTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="body-content">
+          <div>
+            <label>{{apiResponseMessage}}</label>
+          </div>
+        </div>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="okBtn" (click)="onOk()" >OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Loader Overlay -->
+  <div id="overlay"><div id="listLoader"></div></div>

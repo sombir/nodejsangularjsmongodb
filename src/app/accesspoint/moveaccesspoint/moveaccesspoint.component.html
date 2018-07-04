@@ -1,0 +1,104 @@
+<!-- The Modal -->
+<div class="modal fade" id="moveApModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Move AP</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<form [formGroup]="moveApForm" >
+				<div class="modal-body">
+					<div class="body-content" *ngIf="selectedApCount>=1">
+						<div class="card"  *ngIf="selectedApCount==1">
+							<div class="card-header" align="center">
+								Current AP Details
+							</div>
+							<div class="card-block">
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item"><span class="left">AP Serial : </span><span class="right">{{moveSelectedAP[0].apserial}}</span></li>
+									<li class="list-group-item"><span class="left">AP Name : </span><span class="right">{{moveSelectedAP[0].apname}}</span></li>
+									<li class="list-group-item"><span class="left">Cluster : </span><span class="right">{{moveSelectedAP[0].clustername}}</span></li>
+									<li class="list-group-item"><span class="left">Zone : </span><span class="right">{{moveSelectedAP[0].zonename}}</span></li>
+
+								</ul>
+							</div>
+						</div>
+						<br>
+						<div class="form-group"   *ngIf="selectedApCount==1">
+							<label for="cip">AP Name</label>
+							<input type="text" class="form-control" placeholder="Enter AP Name" id="moveAPName" formControlName="apName" value="{{moveSelectedAP[0].apname}}">
+						</div>
+						<div class="form-group">
+							<label for="loginid">Cluster</label>
+							<select formControlName="ClusterData" (change)="selectCluster()" class="form-control" id="clusterDropDown" placeholder="No Cluster Selected">
+								<option value="">Select Cluster</option>
+								<option value="{{cluster.ip}}" *ngFor="let cluster of clusterList">{{cluster.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="pwd">Zone</label>
+							<select formControlName="zoneData" class="form-control" id="zoneDropDown" placeholder="No Zone Selected">
+								<option value="">Select Zone</option>
+								<option value="{{zone.name}}" *ngFor="let zone of zoneList">{{zone.name}}</option>
+							</select>
+						</div>
+					</div>
+					<!-- <div class="body-content" *ngIf="selectedApCount > 1">
+						<div><label>You have to select only one AP to Move?</label></div>
+					</div> -->
+					<div class="body-content" *ngIf="selectedApCount == 0">
+						<div><label>Please select at least one AP to Move.</label></div>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<div [ngStyle]="{'display':loaderDisplay}" class="loader"></div>
+					<button type="submit" class="btn btn-primary" id="moveAP" (click)="moveApDetails()" *ngIf="selectedApCount >= 1">Move</button>
+					<button type="button" class="btn btn-secondary" id="cancelMove" (click)="cancelApDetails()">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div id="openMoveAPpopup" data-toggle="modal" data-target="#confirmMoveAPModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmMoveAPModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{moveAPTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div *ngIf="resMessageArr.length != 0" class="body-content moveAPRes">
+						<div><label>{{moveAPMessage}}</label></div>
+						<hr />
+						<div *ngFor="let reMessage of resMessageArr">
+							<label>{{reMessage}}</label>
+						</div>
+					</div>
+					<div *ngIf="resMessageArr.length == 0" class="body-content">
+						<div><label>{{moveAPMessage}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okMoveAPBtn" data-dismiss="modal" (click)="okMoveAP()">Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>

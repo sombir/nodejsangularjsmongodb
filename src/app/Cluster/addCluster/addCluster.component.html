@@ -1,0 +1,134 @@
+<div class="modal fade" id="addClusterModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h4 class="modal-title">Add New Cluster</h4>
+				<button type="button" class="close" aria-label="Close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			
+			<form novalidate [formGroup]="addClusterForm" >
+				<div class="modal-body">
+					<div class="body-content">
+						<div class="form-group" [ngClass]="{ 'has-danger': clusterName.invalid && (clusterName.dirty || clusterName.touched), 'has-success': clusterName.valid && (clusterName.dirty || clusterName.touched) }">
+							<label for="cname">Cluster Name</label>
+							<input type="text" class="form-control" id="cname" placeholder="Enter Cluster Name" name="cname" formControlName="clusterName" required>
+							<div class="form-control-feedback" *ngIf="clusterName.errors && (clusterName.dirty || clusterName.touched)">
+								<p *ngIf="clusterName.errors.required">Cluster name is required.</p>
+								<p *ngIf="clusterName.errors.lengthError">Cluster Name length cannot be more than 32.</p>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': clusterIPaddress.invalid && (clusterIPaddress.dirty || clusterIPaddress.touched), 'has-success': clusterIPaddress.valid && (clusterIPaddress.dirty || clusterIPaddress.touched) }">
+							<label for="cip">Management Host Name / (or IP address)</label>
+							<input type="text" class="form-control" id="cip" placeholder="172.16.108.116/2001:cdba::3257:9652/hqrp1" name="cip" (focusout)="checkdnslookup()" formControlName="clusterIPaddress" required>
+							<div class="form-control-feedback" *ngIf="clusterIPaddress.errors && (clusterIPaddress.dirty || clusterIPaddress.touched)">
+								<p *ngIf="clusterIPaddress.errors.required">Cluster Hostname/IP address is required.</p>
+								<p *ngIf="clusterIPaddress.errors.lengthError">Cluster Hostname/IP length cannot be more than 255.</p>
+								<p *ngIf="clusterIPaddress.errors.patternError">Cluster Hostname/IP should be valid.</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="loginid">Login ID</label>
+							<input type="text" class="form-control" id="loginid" placeholder="Enter Login ID" name="loginid" formControlName="clusterLoginID">
+						</div>
+						<div class="form-group">
+							<label for="pwd">Password</label>
+							<input type="password" class="form-control" id="pwd" placeholder="Enter Password" name="pwd" formControlName="clusterPassword">
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': clusterTag.invalid && (clusterTag.dirty || clusterTag.touched), 'has-success': clusterTag.valid && (clusterTag.dirty || clusterTag.touched) }">
+							<label for="tag">Tag</label>
+							<input type="text" class="form-control" id="tag" placeholder="Enter Tag" name="tag" formControlName="clusterTag">
+							<div class="form-control-feedback" *ngIf="clusterTag.errors && (clusterTag.dirty || clusterTag.touched)">
+								<p *ngIf="clusterTag.errors.lengthError">Tag length cannot be more than 32.</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="importAP">Import AP</label>
+								<br>
+								<label class="switch">
+									<input type="checkbox" class="form-control" id="importAP" formControlName="clusterImportAP">
+									<span class="slider round"></span>
+								</label>
+							</div>
+							<div class="form-group col-6">
+								<label for="defaultCluster">Default Cluster</label>
+								<br>
+								<label class="switch">
+									<input type="checkbox" class="form-control" id="defaultCluster" formControlName="clusterDefaultCluster">
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				
+				<div class="modal-footer">
+					<div [ngStyle]="{'display':loaderDisplay}" class="loader"></div>
+					<button type="submit" class="btn btn-primary" (click)="testConnection()" data-toggle="modal" data-target="#loaderModal" id="testBtn" >Test Connection</button>
+					<button type="submit" class="btn btn-primary" (click)="addClusterDetails()" data-toggle="modal" data-target="#loaderModal" id="addBtn" >Add</button>
+					<button type="button" class="btn btn-outline-dark" (click)="cancel()" id="cancelBtn">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- The Modal -->
+<!-- <div class="modal fade" id="modelDialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="body-content">
+                    <div>
+                        <label>{{modelMessage}}</label>
+                    </div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" id="okBtn" (click)="onOk()" >OK</button>
+			</div>
+			
+		</div>
+	</div>
+</div> -->
+
+<div id="openAddCluserpopup" data-toggle="modal" data-target="#confirmAddClusterModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmAddClusterModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{addClusterTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="body-content">
+						<div><label>{{addClustermessage}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okAddClusterBtn" data-dismiss="modal" (click)="okAddCluster()">Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+

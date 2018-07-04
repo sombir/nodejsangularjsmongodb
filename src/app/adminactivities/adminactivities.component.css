@@ -1,0 +1,71 @@
+.mainBody{
+    background-color: #D8DFE7;
+    margin-top: -15px;
+    padding: 1%;
+}
+
+.subBody{
+    padding: 2.1% 0% 2% 0%;
+    margin: 1% 2% 1% 2%;
+    background-color: #EFF3F4;
+    width: 96%;
+}
+
+.activitiesHeader{
+    font-size: 35px;
+    font-family: "Helvetica Neue",helvetica,arial,sans-serif;
+    color: #797979;
+    font-weight: bold;
+    margin-left: 2%;
+    padding-top: 10px;
+}
+
+#adminWrapper{
+    display: inherit;
+    -webkit-transition: all 0.05s ease;
+    -moz-transition: all 0.05s ease;
+    -o-transition: all 0.05s ease;
+    transition: all 0.05s ease;
+    width: 100%;
+}
+
+
+
+/*#adminSideBar{
+    overflow-y: visible;
+    -webkit-transition: all 0.05s ease;
+    -moz-transition: all 0.05s ease;
+    -o-transition: all 0.05s ease;
+    transition: all 0.05s ease;
+    margin-left:1%;
+    padding-left:15px;
+    padding-top: 50px;
+}
+
+#adminSidePanelView{
+    border: 1px solid #D6D6D6;
+    background-color: #FFFFFF;
+    width: 248px;
+    overflow-y: auto;
+    height: 200px;
+    margin-right: 25px;
+    padding-top: 10px;
+    padding-left: 30px;
+}
+
+.badge-default{
+    background-color: grey;
+    color: white;
+}
+
+#SelectedItem{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+*/
+#adminTableView{
+    width: 100%;
+    overflow: auto;
+}

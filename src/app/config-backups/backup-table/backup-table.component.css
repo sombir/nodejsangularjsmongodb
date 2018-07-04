@@ -1,0 +1,38 @@
+.backupTableTh{
+    background-color: white
+}
+.backupLogsTitle{
+    color: #333333;
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.backupLogsSubTitle{
+    color: #333333;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 20px 0px 10px 15px;
+}
+.backupLogsBtn{
+    margin-left: 50px;
+}
+.backupLogsModelBody{
+    background-color: #ECF0F5;
+}
+
+.table.dataTable{
+    border-collapse : collapse !important;
+}
+
+table > thead > tr > th{
+    font-size: 16px !important;
+    padding: 10px !important;
+    background-color: #F5F5F5;
+    color: #4A89BF;
+}
+table > tbody > tr > td {
+    font-size: 14px !important;
+    padding: 10px !important;
+    color: #000;
+}
+tr:nth-child(even) {background: #F6F7F8}
+tr:nth-child(odd) {background: #FFFFFF}

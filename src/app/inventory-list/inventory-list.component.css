@@ -1,0 +1,338 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (https://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+ /* Toggle Styles */
+ #Wrapper{
+    display: inherit;
+    -webkit-transition: all 0.05s ease;
+    -moz-transition: all 0.05s ease;
+    -o-transition: all 0.05s ease;
+    transition: all 0.05s ease;
+    width: 100%;
+}
+
+
+
+#SideBar{
+    /* width: 20em;
+    z-index: 1000;*/
+    overflow-y: visible;
+    padding-top: 5px;
+    -webkit-transition: all 0.05s ease;
+    -moz-transition: all 0.05s ease;
+    -o-transition: all 0.05s ease;
+    transition: all 0.05s ease;
+    margin-left:1%;
+    padding-left:15px;
+}
+
+.treeActionBtnGrp{
+    width: 100%;
+}
+
+/*#Wrapper.toggle{
+    padding-left: 250px;
+    }*/
+
+/*#Wrapper.toggled #SideBar {
+    width: 0em;
+    }*/
+
+/*#Wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -25%;
+    }*/
+
+    #page-content-wrapper{
+        padding-top: 4em;
+        background-color: #ebebeb;
+        width: 4%;
+        text-align: center;
+        border: 1px solid #797979;
+        border-radius: 5px;
+    }
+
+
+
+/*@media(max-width:768px) {
+    #Wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #SideBar {
+        width: 0px;
+    }
+
+    #Wrapper.toggled #SideBar {
+        width: 20em;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #Wrapper.toggled # {
+        position: relative;
+        margin-right: 0;
+    }
+    }*/
+
+    .btn.focus, .btn:focus {
+        outline: 0;
+        box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    }
+
+    .btn-group{
+        height: 30px;
+        /*margin-left: 5px;*/
+        margin-right: 5px;
+    }
+
+
+
+    .btn{
+        border-color: #CCCCCC;
+        background-color: #FFFFFF;
+        padding: 0px;
+    }
+
+    #refeshTreeBtn{
+        width: 24px;
+        height: 24px;
+        background-image: url('../../assets/images/refresh.png');
+        background-size: 15px 15px;
+        background-repeat:no-repeat;
+        background-position:center center;
+        border-radius: 0px;
+        position: absolute;
+        right: 0px;
+        border-color: #CCCCCC;      
+        background-color: #FFFFFF;      
+        padding: 0px;   
+    }
+
+    #addTreeBtn{
+        width: 30px;
+        height: 30px;
+        background-image: url('../../assets/images/plus.png');
+        background-size: 17px 17px;
+        background-repeat:no-repeat;
+        background-position:center center;
+    }
+
+    #editTreeBtn{
+        width: 30px;
+        height: 30px;
+        background-image: url('../../assets/images/edit.png');
+        background-size: 17px 17px;
+        background-repeat:no-repeat;
+        background-position:center center;
+    }
+
+    #deleteTreeBtn{
+        width: 30px;
+        height: 30px;
+        background-image: url('../../assets/images/cross.png');
+        background-size: 17px 17px;
+        background-repeat:no-repeat;
+        background-position:center center;
+    }
+
+    #refeshTableBtn{
+        width: 30px;
+        height: 30px;
+        background-image: url('../../assets/images/refresh.png');
+        background-size: 17px 17px;
+        background-repeat:no-repeat;
+        background-position:center center;
+    }
+
+    #addTableBtn{
+        width: 30px;
+        height: 30px;
+        background-image: url('../../assets/images/plus.png');
+        background-size: 17px 17px;
+        background-repeat:no-repeat;
+        background-position:center center;
+    }
+
+    #editTableBtn{
+        width: 30px;
+        height: 30px;
+        background-image: url('../../assets/images/edit.png');
+        background-size: 17px 17px;
+        background-repeat:no-repeat;
+        background-position:center center;
+    }
+
+    #closeTableBtn{
+        width: 30px;
+        height: 30px;
+        background-image: url('../../assets/images/cross.png');
+        background-size: 17px 17px;
+        background-repeat:no-repeat;
+        background-position:center center;
+    }
+
+    .menu-toggle{
+        border-color: transparent;
+        background-color: transparent;
+    }
+
+    #treeViewPanel{
+        border: 1px solid #D6D6D6;
+        background-color: #FFFFFF;
+        margin-top: 15px;
+        width: 248px;
+        overflow-y: auto;
+    }
+
+    .table > thead > tr > th {
+     background-color: #D4D4D4;
+     color: #636363;
+ }
+
+ .table > tbody > tr > td{
+    color: #7E7988;
+}
+
+.table > tbody > tr:nth-child(2n+2) > td{
+ background-color: #F8F8F8;
+}
+
+.table{
+    color: #F3F3F4;
+}
+
+.table.dataTable{
+    border-collapse : collapse !important;
+}
+
+.table-bordered {
+    border: 1px solid #D7D7D7  !important;
+}
+
+.table-bordered tr {
+    border: 1px solid #D7D7D7  !important;
+}
+
+.table-bordered td, .table-bordered th {
+    border: 0px solid #e9ecef;
+}
+
+.table-responsive{
+    margin-top: 0.5%;
+    margin-bottom: 1%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#managedAPListLoader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 5em;
+    height: 5em;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#managedAPOverlay{
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.badge-default{
+    background-color: #C0C0C0 !important;
+    color: white !important;
+}
+
+.badge-danger {
+  color: #fff !important;
+  background-color: #941751 !important;
+}
+
+.badge-warning {
+  color: #fff !important;
+  background-color: #E7AB5F !important;
+}
+
+.badge-primary{
+  color: #fff !important;
+  background-color: #67AECA !important;
+}
+
+.status{
+    width: 15px;
+}
+
+.fa{
+    color: #337AB7;
+}
+
+#treeToggle{
+    width: 30px;
+    height: 30px;
+    background-size: 17px 17px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    float: right;
+    clear: right;
+}
+
+#expandToggleText{
+    padding-left: 10px;
+    color: #797979;
+    white-space: nowrap;
+    /* Rotate div */
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Safari 3-8 */
+    transform: rotate(90deg);
+}
+
+.overlay{
+    opacity:1;
+    background-color:#F3F3F4;
+    border: 1px solid #797979;
+    border-radius: 5px;
+    position:absolute;
+    z-index:1000;
+    height: 100%;
+    scroll-behavior: auto;
+}
+
+.badgeText{
+    width: 20px;
+    height: 20px;
+    vertical-align: sub;
+    white-space: nowrap;      /*keep text on one line */
+    overflow: hidden;         /*prevent text from being shown outside the border */
+    text-overflow: ellipsis;  /*cut off text with an ellipsis*/
+}
+
+table.dataTable thead tr.cancel_sorting th:first-child:before {right: 0em; content: none !important;}
+table.dataTable thead tr.cancel_sorting th:first-child:after {right: 0em; content: none !important;}
+table.dataTable thead > tr > th.sorting_asc { padding-right: 0.75rem !important; }
+
+.managedAPTemplate{
+	width: 100%;
+	overflow: auto;
+}

@@ -1,0 +1,15 @@
+login {
+	background-color: #464C54;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+}
+
+.BulkAPRes{
+	max-height : 200px;
+	overflow-y : scroll;
+}

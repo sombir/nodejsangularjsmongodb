@@ -1,0 +1,60 @@
+<!-- The Modal -->
+<div class="modal fade" id="importAPModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Import APs to the Cluster</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="body-content" id="confirmImport" *ngIf="importConfirm">
+					<div><label>Are you sure, you want to import APs of the cluster {{showName}}?</label></div>
+				</div>
+				<div class="body-content" id="noClusterToConfirm" *ngIf="noClusterConfirm||multipleClusterConfirm">
+					<div><label>Please select one cluster to import APs.</label></div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<div [ngStyle]="{'display':loaderDisplay}" class="loader"></div>
+				<button type="submit" class="btn btn-primary" (click)="importAPs()" id="ImporteBtn" *ngIf="importConfirm">Yes! Import</button>
+				<button type="button" class="btn btn-secondary" id="CancelBtn" (click)="cancel()" data-dismiss="modal">Cancel</button>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div id="openImportAPpopup" data-toggle="modal" data-target="#confirmImportAPModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmImportAPModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{importAPTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="body-content">
+						<div><label>{{importAPMessage}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okImportAPBtn" data-dismiss="modal" (click)="okImportAP()">Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>

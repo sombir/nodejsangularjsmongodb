@@ -1,0 +1,149 @@
+	<div class="container-fluid"> 
+		<div class="clusterBtns d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between">
+			<div class="btn-group" role="group" aria-label="Basic example">
+				<button type="button" class="btn btn-default" id="refeshBtn" (click)="refreshApList()" title="Refresh AP List" alt="Refresh AP List"></button>
+				<button type="button" class="btn btn-default" id="addBtn"  (click)="addApBtn()" data-toggle="modal" data-target="#addApModal" title="Add New AP" alt="Add New AP"></button>
+				<button type="button" class="btn btn-default" id="editBtn" [disabled]="isEnabled" (click)="moveApBtn()" data-toggle="modal" data-target="#moveApModal" title="Move AP" alt="Move AP"></button>
+				<button type="button" class="btn btn-default" id="closeBtn" [disabled]="isEnabled" (click)="deleteApBtn()" data-toggle="modal" data-target="#deleteApModal" title="Delete AP" alt="Delete AP"></button>
+				<button type="button" class="btn btn-default" id="importCSVBtn" (click)="addApBtn()" data-toggle="modal" data-target="#bulkUploadModal" title="Bulk Import APs" alt="Bulk Import APs"></button>
+			</div>
+			<div class="input-group" align="center" hidden="true">
+				<input class="form-control"
+				placeholder="Search Cluster by Name" #searchText>
+				<div class="input-group-addon" ><i class="fa fa-search"></i></div>
+			</div>
+			<div id="totalAPCount" hidden="true">Total: {{apsCount}}</div>
+		</div>
+	</div>
+	<div id="InventoryListTable">
+		<div class="container-fluid"> 
+			<div class="table-responsive">
+				<table datatable [dtOptions]="dtOptions" class="table table-bordered" id="apTable" width="100%">
+					<thead>
+						<!-- <tr style="border-bottom: 1px solid #F3F3F4 !important;text-align:center;">
+							<th colspan="6" style="border-right: 1px solid #F3F3F4 !important;">CDS</th>
+							<th colspan="3">Controller</th>
+						</tr> -->
+						<tr class="cancel_sorting">
+							<th class="sorting_disabled" style="width:50px !important;">
+								<div class="text-center">
+									<input type="checkbox" value="" id="selectAllCheck" [(ngModel)]="selectedAll" (change)="checkAllRows($event)" >
+								</div>
+							</th>
+							<th class="customWidth ">AP Serial</th>
+							<th class="customWidth">AP Name</th>
+							<th class="customWidth">Mac Address</th>
+							<th class="customWidth">IP</th>
+							<th class="customWidth">Config Type</th>
+							<th class="customWidth">Discovery Time</th>
+							<th class="customWidth">Cluster</th>
+							<th class="customWidth">Zone</th>
+							<th class="customWidth graphics">Connect Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let ap of this.apsList">
+							<td  class="text-center">
+								<input type="checkbox" value="" [(ngModel)]="ap.selectcheckbox" (change)="checkSelectedRows(ap,ap.selectcheckbox)">
+							</td>
+							<td >{{ap.apserial}}</td>
+							<!-- <td >{{ap.apname}}</td> -->
+							<td ><span *ngIf="ap.apname!=null"><span *ngIf="ap.apname.length<=13">{{ap.apname}}</span><span *ngIf="ap.apname.length>13" data-toggle="tooltip" data-placement="top" title={{ap.apname}}>{{ap.apname.substring(0,10)}}...</span></span><span *ngIf="ap.apname==null">{{ap.apname}}</span></td>
+							<td >{{ap.mac}}</td>
+							<td >{{ap.ip}}</td>
+							<td>{{ap.configmethod}}</td>
+							<td *ngIf="ap.last_contacted">{{ap.last_contacted | date: 'MM/dd/yyyy hh:mm:ss a' : timezone}}</td>
+							<td *ngIf="!ap.last_contacted">N/A</td>
+							<td >{{ap.clustername}}</td>
+							<td >{{ap.zonename}}</td>							
+							<td class="graphics" *ngIf="ap.cds_cluster_state=='CONNECTED'"><div class="apBlueStatus">{{ap.cds_cluster_state}}</div></td>
+							<td class="graphics" *ngIf="ap.cds_cluster_state=='NOTCONNECTED'"><div class="apRedStatus">{{ap.cds_cluster_state}}</div></td>
+							<td class="graphics" *ngIf="ap.cds_cluster_state=='FLAGGED'"><div class="apYellowStatus">{{ap.cds_cluster_state}}</div></td>
+							<td class="graphics" *ngIf="ap.cds_cluster_state=='PREPROVISIONED'"><div class="apGreyStatus">{{ap.cds_cluster_state}}</div></td>
+							<td class="graphics" *ngIf="ap.cds_cluster_state=='STRANDED'"><div class="apGreyStatus">{{ap.cds_cluster_state}}</div></td>
+							<td class="graphics" *ngIf="ap.cds_cluster_state=='NOTINCLUSTER'"><div class="apGreyStatus">{{ap.cds_cluster_state}}</div></td>
+							<td class="graphics" *ngIf="ap.cds_cluster_state=='REJECTED'"><div class="apGreyStatus">{{ap.cds_cluster_state}}</div></td>
+							<td class="graphics" *ngIf="ap.cds_cluster_state==''"><div class="apGreyStatus">N/A</div></td>
+						</tr> 
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	<!-- Loader Overlay -->
+	<div id="overlay"><div id="listLoader"></div></div>
+	
+
+	<!-- The Delete AP Modal -->
+	<div class="modal fade" id="deleteApModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Access Point</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="modal-body">
+						<div class="body-content" *ngIf="selectedApCount >= 1">
+							<div *ngIf="selectedApCount == 1"><label>Are you sure, you want to delete the selected AP?</label></div>
+							<div *ngIf="selectedApCount > 1"><label>Are you sure, you want to delete the selected AP?</label></div>
+							<div>
+								<input type="checkbox" value="" id="deleteFromSZ" [(ngModel)]="isCheckedVsz" (change)="deleteFromSZ(isCheckedVsz)" >
+								<label>Check if you want to delete from smartzone</label>
+							</div>
+						</div>
+						<div class="body-content" *ngIf="selectedApCount<=0">
+							<div><label>Please select atleast one AP to delete.</label></div>
+						</div>
+					</div>
+					
+				</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<div [ngStyle]="{'display':loaderDisplay}" class="loader"></div>
+					<button type="submit" class="btn btn-primary" id="deleteAP" (click)="deleteApFunction(selectedApRows)" *ngIf="selectedApCount >= 1">Yes! Delete</button>
+					<button type="button" class="btn btn-secondary" id="calcelDelete" (click)="canceldeleteAp()">Cancel</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<app-addaccesspoint [ngStyle]="{'display':displayAddAp}" (refreshEvent)="refreshEventAfterAdd($event)"></app-addaccesspoint>
+	<app-moveaccesspoint [ngStyle]="{'display':displayMoveAp}" (refeshAPList)="refreshEventAfterAdd($event)" [multipleAPsSelected]=multipleAPsSelected [moveAP]=moveAP></app-moveaccesspoint>
+
+<div id="openpopup" data-toggle="modal" data-target="#confirmAPModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmAPModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{apTitle}}</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="modal-body">
+					<div class="body-content">
+						<div><label>{{apMessage}}</label></div>
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="okAPBtn" data-dismiss="modal" (click)="okAPBtnClicked()" >Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>

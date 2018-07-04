@@ -1,0 +1,594 @@
+<div id="chartView" (window:resize)="makeResponsive()">
+   <div class="container-fluid">
+       <div class = "row">
+           <div class = "col-6"> <h3 align="left"><span class = "smartzone">Smart Zone -</span> <span class = "clustername">{{clusterName}}</span></h3></div>
+         <!-- </div> -->
+		<div class = "col-6" align="right"> 
+            <span *ngIf = "!syncTime" class="syncTime">Last Sync Time : N/A&nbsp;&nbsp;&nbsp;&nbsp;</span><span *ngIf = "syncTime" class="syncTime">Last Sync Time : {{syncTime | date: 'MM/dd/yyyy hh:mm:ss a' : timezone}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class = "redo" title="Sync Cluster" (click)="updateLiveData()"><i class="fa fa-sync" aria-hidden="true"></i></span>
+        </div>
+       </div>
+   </div><br>
+      <div class="container-fluid">
+      <div class="row dashboard-row">
+         <div class="col-sm-12 col-md-6 col-lg-3 infoBlock" align="center">
+            <div class="blockcontainer">
+               <p class="infoData total-text"><strong>Access Points</strong></p>
+               <h3 class="infoData total-number"><strong>{{no_of_aps}}</strong></h3>
+               <div class="row thin-div">
+                  <div class="col-sm-4 col-md-4 col-lg-4 online-state">
+                     {{apState_online}}
+                  </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4 flagged-state">
+                     {{apState_flagged}}
+                  </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4 offline-state">
+                     {{apState_offline}}
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-sm-12 col-md-6 col-lg-3 infoBlock" align="center">
+            <div class="blockcontainer">
+               <p class="infoData total-text"><strong>Data Planes</strong></p>
+               <h3 class="infoData total-number"><strong>{{no_of_dps}}</strong></h3>
+               <div class="row thin-div">
+                  <div class="col-sm-4 col-md-4 col-lg-4 online-state">
+                     {{dpState_online}}
+                  </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4 flagged-state">
+                     {{dpState_flagged}}
+                  </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4 offline-state">
+                     {{dpState_offline}}
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-sm-12 col-md-6 col-lg-3 infoBlock" align="center">
+            <div class="blockcontainer">
+               <p class="infoData total-text"><strong>Control Planes</strong></p>
+               <h3 class="infoData total-number"><strong>{{no_of_cps}}</strong></h3>
+               <div class="row thin-div">
+                  <div class="col-sm-4 col-md-4 col-lg-4 online-state">
+                     {{cpState_online}}
+                  </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4 flagged-state">
+                     {{cpState_flagged}}
+                  </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4 offline-state">
+                     {{cpState_offline}}
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-sm-12 col-md-6 col-lg-3 infoBlock" align="center">
+            <div class="blockcontainer">
+               <p class="infoData total-text"><strong>AP License Usage</strong></p>
+               <div #gaugeLicenseState class = "gauge-chart">
+                  <div class="plot-container plotly" id = "myDiv" align="center"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <br>
+   <div class="row tab-row" align="center">
+      <div class="col-12">
+         <ul class="nav nav-tabs justify-content-start" role="tablist" id = "#mytabs">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Stats</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">Control Planes</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab3" role="tab">Data Planes</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab4" role="tab">AP Zones</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab5" role="tab">AP Models</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab6" role="tab">Client OS Types</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab7" role="tab">Alarms</a></li> -->
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab8" role="tab">Info</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab9" role="tab">Config Backups</a></li>
+            <li class="nav-item"><a class="nav-link" (click)="selectedTimeFrame(true)" data-toggle="tab" href="#tab10" role="tab">Audit Logs</a></li>
+         </ul>
+         <div class="tab-content py-4 panel-color">
+            <div class="tab-pane active" id="tab1" role="tabpanel">
+               <div class="container-fluid">
+                  <div class="row chart-row">
+                     <div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+                        <div #barAPClusterdetail id="barAPClusterdetail">
+                           <!-- Chart will appear here -->
+                        </div>
+                     </div>
+                     <div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+                        <div #barOSDistribution id="barOSDistribution">
+                           <!-- Chart will appear here -->
+                        </div>
+                     </div>
+                     <div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+                        <div #barZoneAPCount id="barZoneAPCount">
+                           <!-- Chart will appear here -->
+                        </div>
+                     </div>
+                     <div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+                        <div #doughnutAPModelDistribution id="doughnutAPModelDistribution">
+                           <!-- Chart will appear here -->
+                        </div>
+                     </div>
+                     <div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+                        <div #doughnutOSClusterdetail id="doughnutOSClusterdetail">
+                           <!-- Chart will appear here -->
+                        </div>
+                     </div>
+                     <div class="col-sm-12 col-md-6 col-lg-4 chartBlock">
+                        <div #barZoneClientCount id="barZoneClientCount">
+                           <!-- Chart will appear here -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tab-pane" id="tab2" role="tabpanel">
+               <!-- Control Plane -->
+               <div class="table-responsive clusterdetailstable">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>
+                              Name
+                           </th>
+                           <th class="graphics">
+                              Status
+                           </th>
+                           <th>
+                              MAC
+                           </th>
+                           <th>
+                              Version
+                           </th>
+                           <th>
+                              IP
+                           </th>
+                           <th>
+                              Cluster Role
+                           </th>
+                           <th>
+                              Disk Used
+                           </th>
+                           <th class="graphics">
+                              Up Time
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let item of viewCPList">
+                           <td>{{item.name}}</td>
+                           <td class="graphics" *ngIf="item.status == 'online'"><img src="../../assets/images/icon_blue.png" class="status" data-toggle="tooltip" title="Online"></td>
+                           <td class="graphics" *ngIf="item.status == 'offline'"><img src="../../assets/images/icon_red.png" class="status" data-toggle="tooltip" title="Offline"></td>
+                           <td class="graphics" *ngIf="item.status == 'flagged'"><img src="../../assets/images/icon_yellow.png" class="status" data-toggle="tooltip" title="Flagged"></td>
+                           <td>{{item.mac}}</td>
+                           <td>{{item.version}}</td>
+                           <td>{{item.managementIp}}</td>
+                           <td>{{item.role}}</td>
+                           <td *ngIf="item.diskUsed != 'N/A' && item.diskUsed != 'Infinity'">{{item.diskUsed}} %</td>
+                           <td *ngIf="item.diskUsed == 'N/A' || item.diskUsed == 'Infinity'">N/A</td>
+                           <td class="graphics">
+                              <div class="uptime">
+                                 <font color = "#ffffff">{{item.uptimeInSecs}}</font>
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="tab-pane" id="tab3" role="tabpanel">
+               <div class="table-responsive clusterdetailstable">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>
+                              Name
+                           </th>
+                           <th class="graphics">
+                              Status
+                           </th>
+                           <th>
+                              MAC
+                           </th>
+                           <th>
+                              Version
+                           </th>
+                           <th>
+                              IP
+                           </th>
+                           <th class="graphics">
+                              Up Time
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let item of viewDPList">
+                           <td>{{item.name}}</td>
+                           <td class="graphics" *ngIf="item.status == 'online'"><img src="../../assets/images/icon_blue.png" class="status" data-toggle="tooltip" title="Online"></td>
+                           <td class="graphics" *ngIf="item.status == 'offline'"><img src="../../assets/images/icon_red.png" class="status" data-toggle="tooltip" title="Offline"></td>
+                           <td class="graphics" *ngIf="item.status == 'flagged'"><img src="../../assets/images/icon_yellow.png" class="status" data-toggle="tooltip" title="Flagged"></td>
+                           <td>{{item.mac}}</td>
+                           <td>{{item.version}}</td>
+                           <td>{{item.ip}}</td>
+                           <td class="graphics">
+                              <div class="uptime">
+                                 <font color = "#ffffff">{{item.uptimeInSecs}}</font>
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="tab-pane" id="tab4" role="tabpanel">
+               <div class="table-responsive clusterdetailstable">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>
+                              Zone Name
+                           </th>
+                           <th>
+                              Online
+                           </th>
+                           <th>
+                              Offline
+                           </th>
+                           <th>
+                              Flagged
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let item of viewZonesummary">
+                           <td scope="row">{{item.zoneName}}</td>
+                           <td>{{item.apOnline}}</td>
+                           <td>{{item.apOffline}}</td>
+                           <td>{{item.apFlagged}}</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="tab-pane" id="tab5" role="tabpanel">
+               <div class="table-responsive clusterdetailstable">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>
+                              AP Model
+                           </th>
+                           <th>
+                              Zone
+                           </th>
+                           <th>
+                              Online
+                           </th>
+                           <th>
+                              Offline
+                           </th>
+                           <th>
+                              Flagged
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let item of viewAPModelList">
+                           <td>{{item.apModel}}</td>
+                           <td>{{item.zoneName}}</td>
+                           <td>{{item.apOnline}}</td>
+                           <td>{{item.apOffline}}</td>
+                           <td>{{item.apFlagged}}</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="tab-pane" id="tab6" role="tabpanel">
+               <div class="table-responsive clusterdetailstable">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>
+                              Type
+                           </th>
+                           <th>
+                              Count
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let item of viewClientOSSummary">
+                           <td>{{item.osType}}</td>
+                           <td>{{item.count}}</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <!-- <div class="tab-pane" id="tab7" role="tabpanel">
+               <h2>Alarms</h2>
+               </div> -->
+            <div class="tab-pane" id="tab8" role="tabpanel">
+               <div class="container-fluid info">
+                  <div class="row info-row" style="">
+                     <div class="column column-style">
+                        <div>Model</div>
+                        <div>Software Version</div>
+                        <div>Configured Mgmt IP</div>
+                        <div>Clients</div>
+                        <div>OS Types</div>
+                        <div>AP Zones</div>
+                        <div>AP Models</div>
+                     </div>
+                     <div class="column info-column2">
+                        <div>{{model}}</div>
+                        <div *ngIf="model == null">NA</div>
+                        <div>{{version}}</div>
+                        <div *ngIf="version == null">NA</div>
+                        <div>{{cfgmgmtip}}</div>
+                        <div *ngIf="cfgmgmtip == null">NA</div>
+                        <div>{{totclients}}</div>
+                        <div *ngIf="totclients == null">NA</div>
+                        <div>{{numofostypes}}</div>
+                        <div *ngIf="numofostypes == null">NA</div>
+                        <div>{{numofzones}}</div>
+                        <div *ngIf="numofzones == null">NA</div>
+                        <div>{{numofapmodels}}</div>
+                        <div *ngIf="numofapmodels == null">NA</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tab-pane" id="tab9" role="tabpanel">
+                <p id="configBackupSubTitle">Note : For each cluster there will be upto 3 config backups available. The oldest version will be rolled out if there are more than 3 backups.</p>
+               <div class="container-fluid">
+                  <div class="clusterBtns d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between align-button-grp">
+                     <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-default" id="refeshBtn" (click)="refreshConfigTableList()" title="Refresh Config Backup Table" alt="Refresh Config Backup Table"></button>
+                        <button type="button" class="btn btn-default" id="deleteBtn" [disabled] = "isDisabled" data-target = "#deleteConfigFileConfirm" data-toggle = "modal" title="Delete Config Backup File" alt="Delete File"></button> 
+                        <button type="button" class="btn btn-default" [disabled] = "isDisabled" id="downloadBtn" (click)="downloadFile()" title="Download File" alt="Download File"></button>
+                        <button type="button" class="btn btn-default" id="downloadConfigBtn" (click)="downloadConfig()" title="Download Config" alt="Download Config"></button>
+                        <!-- <button type="button" class="btn btn-default" id="configdiffBtn" (click)="configDiff('tab10')" title="Config Diff" alt="Config Diff"></button> -->
+                        <button type="button" class="btn btn-default" id="restoreBtn" [disabled] = "isDisabled" (click)="restoreConfigBackup()" title="Restore Backup" alt="Restore Backup"></button>
+                     </div>
+                  </div>
+               </div>
+               <div>
+                  <div class="container-fluid">
+                     <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered"  width="100%" id="configBackupDataTable">
+                        <thead>
+                           <tr>
+                              <th class="no-sort">
+                                 <!-- <div class="text-center">
+                                    <input type="checkbox" value="" id="selectAllCheck">
+                                 </div> -->
+                              </th>
+                              <th>Time Stamp</th>
+                              <th>Result</th>
+                              <!-- <th>Backup Type</th> -->
+                              <th>File Name</th>
+                              <th>File Size</th>
+                              <th>Storage Location</th>
+                              <th>Error Message</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor="let data of fileList">
+                              <td class="text-center"><input type="checkbox" [(ngModel)]="data.select" (change)="selectToken(data,data.select)" value=""></td>
+                              <td>{{data.backupTimestamp | date: 'MM/dd/yyyy hh:mm:ss a' : timezone}}</td>
+                              <td>{{data.backupStatus}}</td>
+                              <!-- <td>Manual</td> -->
+                              <td>{{data.filename}}</td>
+                              <td>{{data.filesize}}</td>
+                              <td *ngIf="data.cdsfileDir && data.remotefileDir">CDS Server,TFTP Server</td>
+                              <td *ngIf="data.remotefileDir && !data.cdsfileDir">TFTP Server</td>
+                              <td *ngIf="data.cdsfileDir && !data.remotefileDir">CDS Server</td>
+                              <td>{{data.error}}</td>
+                           </tr>
+                        </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="tab-pane" id="tab10" role="tabpanel">
+                     <!-- <div class="table-responsive">  -->
+                        <div class="align-timeframe-container">
+                            <div class="dateTimeRow" style="margin-left: 27px;">
+                                    <div class="time-frame">Time Frame :
+                                        <select name="timeFrame" id="timeFrame" (change)="selectedTimeFrame(false);" class = "btn btn-default">
+                                            <option value="24Hours">Last 24 Hours</option>
+                                            <option value="lastWeek">Last Week</option>
+                                            <!-- <option value="lastMonth">Last Month</option> -->
+                                            <option value="custom">Custom</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-inline" [hidden] = "!enableDateTimePicker">
+                                        <div class='input-group date' id='startdatetimepicker'>
+                                            <label for="text" class="startDate">Start Date</label>
+                                            <!-- <div class = "bootstrap-datetimepicker-widget dropdown-menu top" style="z-index:4"></div> -->
+                                            <input type='text' class="form-control" id="startdatetime" />
+                                            <span class="input-group-addon">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                        <div class='input-group date' id='enddatetimepicker'>
+                                            <label for="text" class="endDate">End Date</label>
+                                            <input type='text' class="form-control" id="enddatetime" />
+                                            <span class="input-group-addon">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                        <span class="submitBtnSpan" *ngIf = "enableDateTimePicker"><button type="button" id = "primaryBtn" class="btn btn-primary btn-sm submitBtn" (click)="showModalBackupLog(false)">Submit</button></span>
+                                    </div>
+                            </div>
+                        </div>
+                        <!-- <div class="backupLogsSubTitle">Changes betwee: {{startTimeStamp}} - {{endTimeStamp}}</div> -->
+                        <div class="backupTableTemplate table-responsive"><ng-template #backupTable style="width:100%;"></ng-template></div>
+                     <!-- </div>  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="clusterDetailOverlay">
+   <div id="clusterDetailLoader"></div>
+</div>
+<div id="configDownloadOverlay">
+   <div id="configDownloadLoader"></div>
+</div>
+<div id="openClusterDetailpopup" data-toggle="modal" data-target="#confirmClusterDetailModal"></div>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmClusterDetailModal">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">{{clusterDetailTitle}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal body -->
+         <div class="modal-body">
+            <div class="modal-body">
+               <div class="body-content">
+                  <div><label>{{clusterDetailMessage}}</label></div>
+               </div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="primaryBtn" data-dismiss="modal" (click)="okClusterDetailBtnClicked()" >OK</button>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- The cluster sync Modal -->
+<div class="modal fade" id="clusterSyncModal">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Cluster Configuration Sync</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal body -->
+         <div class="modal-body">
+            <div class="modal-body">
+               <div class="body-content">
+                  <div><label>Are you sure, you want to overwrite the cluster configuration?</label></div>
+               </div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="primaryBtn" (click)="syncClusterConfig()">OK</button>
+            <button type="button" class="btn btn-secondary" id="syncClusterCancel" (click)="cancelSyncCluster()">Cancel</button>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade" id="modelDialogBckupSettings">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">{{modelTitle}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div>
+                  <label>{{message}}</label>
+               </div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" *ngIf = "!wrongNoofUserSelected" id="primaryBtn" (click)="onOkBckupSettings()" >OK</button>
+            <button type="button" class="btn btn-primary" *ngIf = "wrongNoofUserSelected" id="primaryBtn" (click)="onOk()" >OK</button>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade" id="modelDialogRestoreBckupConfirm">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">Confirm Backup Restore Trigger</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div>
+                  <label>Backup file successfully uploaded onto the controller, now you can trigger the restore from smart zone having file created time is : <b>{{fileCreatedTime}}</b></label>
+               </div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <!--<button type="button" class="btn btn-primary" id="okBtn" (click)="triggerRestoreConfigBackup(controllerid, backupKeyId)" >Start Restore Now</button>-->
+            <button type="button" class="btn btn-primary" id="primaryBtn" (click)="okBtnClicked()" >OK</button>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade" id="modelDialogRestoreBckup">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">{{modelTitle}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div>
+                  <label>{{message}}</label>
+               </div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="primaryBtn" (click)="okBtnClicked()" >OK</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+      <!-- The Modal -->
+      <div class="modal fade" id="deleteConfigFileConfirm">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <!-- Modal Header -->
+               <div class="modal-header">
+                  <h4 class="modal-title">Delete Config backup File</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <!-- Modal body -->
+               <div class="modal-body">
+                  <div class="body-content">
+                     <div *ngIf = "selectedFiles.length == 1"><label>Are you sure, you want to delete the config backup file ?</label></div>
+                     <div *ngIf = "selectedFiles.length > 1"><label>Please select one file to delete</label></div>
+                  </div>
+               </div>
+               <!-- Modal footer -->
+               <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" id="primaryBtn" *ngIf = "selectedFiles.length == 1" (click)="deleteConfigFile()">Yes! Delete</button>
+                  <button type="button" class="btn btn-secondary" id="cancelBtn" (click)="cancel()">Cancel</button>
+               </div>
+            </div>
+         </div>
+      </div>
+        <!-- Loader Overlay -->
+  <div id="overlay"><div id="listLoader"></div></div> 

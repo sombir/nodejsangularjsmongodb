@@ -1,0 +1,48 @@
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered" id="managedBackupLogsTable" width="100%">
+  <thead>
+    <tr class="backupTableTh">
+      <th >Timestamp</th>
+      <th >User</th>
+      <th >Action</th>
+      <th>Resource</th>
+      <th >Description</th>
+    </tr>
+  </thead>
+    <tbody>
+    <tr *ngFor="let data of configDiffStats">
+      <td>{{data.auditTime}}</td>
+      <td>{{data.createUserName}}</td>
+      <td>{{data.action}}</td>
+      <td>{{data.object}}</td>
+    <td>{{data.message}}</td>
+    </tr>
+  </tbody> 
+</table>
+<!-- Loader Overlay -->
+<div id="overlay"><div id="listLoader"></div></div>
+
+<div id="showAuditLogModal" data-toggle="modal" data-target="#auditLogModal" hidden="true"></div>
+<!-- The Modal -->
+<div class="modal fade" id="auditLogModal">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <h4 class="modal-title">{{modelTitle}}</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <!-- Modal body -->
+         <div class="modal-body">
+            <div class="body-content">
+               <div>
+                  <label>{{modalMessage}}</label>
+               </div>
+            </div>
+         </div>
+         <!-- Modal footer -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="auditLogModalOKBtn" (click)="okBtnClicked()" >OK</button>
+         </div>
+      </div>
+   </div>
+</div>

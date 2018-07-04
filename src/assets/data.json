@@ -1,0 +1,194 @@
+{
+	"totalClusters": 4,
+	"clusterState": {
+		"online": 4,
+		"flagged": 0,
+		"offline": 0
+	},
+	"momConnectionState": {
+		"online": 3,
+		"flagged": 1,
+		"offline": 0
+	},
+	"apState": {
+		"online": 58,
+		"flagged": 33,
+		"offline": 36
+	},
+	"cpState": {
+		"online": 5,
+		"flagged": 0,
+		"offline": 0
+	},
+	"dpState": {
+		"online": 4,
+		"flagged": 0,
+		"offline": 0
+	},
+	"totalClients": 120,
+	"totalZones": 47,
+	"licenseState": {
+		"consumed": 173,
+		"total": 1803
+	},
+	"alarms": {
+		"critical": 0,
+		"major": 2,
+		"minor": 0
+	},
+	"osTypes": [{
+		"osType": "Amazon Kindle",
+		"count": 13
+	}, {
+		"osType": "Android",
+		"count": 13
+	}, {
+		"osType": "Axis communications ab IPCamera",
+		"count": 1
+	}, {
+		"osType": "Chrome OS",
+		"count": 2
+	}, {
+		"osType": "Eye-Fi Wireless Memory Card",
+		"count": 6
+	}, {
+		"osType": "Gentoo",
+		"count": 1
+	}, {
+		"osType": "HP Printer",
+		"count": 1
+	}, {
+		"osType": "Mac OS X",
+		"count": 11
+	}, {
+		"osType": "Nokia ",
+		"count": 1
+	}, {
+		"osType": "Playstation 2",
+		"count": 1
+	}, {
+		"osType": "Unknown",
+		"count": 25
+	}, {
+		"osType": "Windows (Mobile) 8/8.1/10",
+		"count": 1
+	}, {
+		"osType": "Windows 7/Vista",
+		"count": 10
+	}, {
+		"osType": "Xbox 360",
+		"count": 1
+	}, {
+		"osType": "iOS",
+		"count": 33
+	}],
+	"apModels": [{
+		"apModel": "H500",
+		"apOnline": 1,
+		"apFlagged": 0,
+		"apOffline": 1
+	}, {
+		"apModel": "R500",
+		"apOnline": 0,
+		"apFlagged": 0,
+		"apOffline": 2
+	}, {
+		"apModel": "R510",
+		"apOnline": 5,
+		"apFlagged": 8,
+		"apOffline": 4
+	}, {
+		"apModel": "R600",
+		"apOnline": 4,
+		"apFlagged": 0,
+		"apOffline": 3
+	}, {
+		"apModel": "R610",
+		"apOnline": 12,
+		"apFlagged": 10,
+		"apOffline": 7
+	}, {
+		"apModel": "R700",
+		"apOnline": 2,
+		"apFlagged": 1,
+		"apOffline": 0
+	}, {
+		"apModel": "R710",
+		"apOnline": 19,
+		"apFlagged": 7,
+		"apOffline": 11
+	}, {
+		"apModel": "R720",
+		"apOnline": 1,
+		"apFlagged": 3,
+		"apOffline": 1
+	}, {
+		"apModel": "T300E",
+		"apOnline": 0,
+		"apFlagged": 1,
+		"apOffline": 0
+	}, {
+		"apModel": "T610",
+		"apOnline": 0,
+		"apFlagged": 0,
+		"apOffline": 2
+	}, {
+		"apModel": "T710",
+		"apOnline": 0,
+		"apFlagged": 2,
+		"apOffline": 0
+	}, {
+		"apModel": "ZF7055",
+		"apOnline": 0,
+		"apFlagged": 0,
+		"apOffline": 1
+	}, {
+		"apModel": "ZF7372",
+		"apOnline": 2,
+		"apFlagged": 1,
+		"apOffline": 2
+	}, {
+		"apModel": "ZF7982",
+		"apOnline": 9,
+		"apFlagged": 0,
+		"apOffline": 2
+	}, {
+		"apModel": "zf7055",
+		"apOnline": 3,
+		"apFlagged": 0,
+		"apOffline": 0
+	}],
+	"clusters": [{
+		"clusterId": 1,
+		"clusterName": "Alpha-SZ100",
+		"zone": 6,
+		"client": 54,
+		"apOnline": 25,
+		"apFlagged": 3,
+		"apOffline": 13
+	}, {
+		"clusterId": 2,
+		"clusterName": "vsz34",
+		"zone": 35,
+		"client": 49,
+		"apOnline": 18,
+		"apFlagged": 0,
+		"apOffline": 22
+	}, {
+		"clusterId": 3,
+		"clusterName": "density-vsze-cluster",
+		"zone": 2,
+		"client": 17,
+		"apOnline": 15,
+		"apFlagged": 30,
+		"apOffline": 0
+	}, {
+		"clusterId": 4,
+		"clusterName": "one",
+		"zone": 4,
+		"client": 0,
+		"apOnline": 0,
+		"apFlagged": 0,
+		"apOffline": 1
+	}]
+}

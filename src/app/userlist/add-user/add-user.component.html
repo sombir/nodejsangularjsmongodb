@@ -1,0 +1,85 @@
+<!-- The Modal -->
+<div class="modal fade" id="addUserModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Add New User</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<form novalidate [formGroup]="addUserForm"><!--   -->
+				<div class="modal-body">
+					<div class="body-content">
+						<div class="form-group" [ngClass]="{ 'has-danger': username.invalid && (username.dirty || username.touched), 'has-success': username.valid && (username.dirty || username.touched) }">
+							<label for="username">Username</label>
+							<input type="text" class="form-control" placeholder="Enter Username" formControlName="username" name="username" required>
+							<div class="form-control-feedback" *ngIf="username.errors && (username.dirty || username.touched)">
+								<p *ngIf="username.errors.required">Username is required.</p>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': email.invalid && (email.dirty || email.touched), 'has-success': email.valid && (email.dirty || email.touched) }">
+							<label for="email">Email Id</label>
+							<input type="email" class="form-control" placeholder="Enter email id" name="email" formControlName="email" required email>
+							<div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+								<p *ngIf="email.errors.required">Email id is required.</p>
+								<p *ngIf="email.errors.email">Email id must be valid.</p>
+							</div>
+						</div>
+						<div class="form-group" [ngClass]="{ 'has-danger': password.invalid && (password.dirty || password.touched), 'has-success': password.valid && (password.dirty || password.touched) }">
+							<label for="password">Password</label>
+							<input type="password" class="form-control" placeholder="Enter password" name="password" formControlName="password" required>
+							<div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
+								<p *ngIf="password.errors.required">Password is required.</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="timezones">Time Zone</label>
+							<select class="form-control dropDownOption" id="addUserTimeZone" formControlName="timezones" name="timezones">
+								<option value="" selected="true">Select time zone</option>
+								<option value="UTC-09:00">Hawaii–Aleutian Time Zone</option>
+								<option value="UTC-08:00">Alaska Time Zone</option>
+								<option value="UTC-07:00">Pacific Time Zone</option>
+								<option value="UTC-06:00">Mountain Time Zone</option>
+								<option value="UTC-05:00">Central Time Zone</option>
+								<option value="UTC-04:00">Eastern Time Zone</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<div [ngStyle]="{'display':loaderDisplay}" class="loader"></div>
+					<button type="submit" class="btn btn-primary" id="addUserBtn" (click)="addUserDetails()">Add</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelBtn" (click)="cancelAddUserDetails()">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+ <!-- The Modal -->
+      <div class="modal fade" id="modelAlertUser">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <!-- Modal Header -->
+               <div class="modal-header">
+                  <h4 class="modal-title">{{modelTitle}}</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <!-- Modal body -->
+               <div class="modal-body">
+                  <div class="body-content">
+                     <div>
+                        <label>{{message}}</label>
+                     </div>
+                  </div>
+               </div>
+               <!-- Modal footer -->
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="primaryBtn" (click)="onOk()">OK</button>
+               </div>
+            </div>
+         </div>
+      </div>

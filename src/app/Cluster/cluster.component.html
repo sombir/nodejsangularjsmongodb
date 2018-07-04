@@ -1,0 +1,50 @@
+<div class="container-fluid">
+		<div class="clusterBtns d-flex justify-content-sm-between justify-content-md-between justify-content-lg-between">
+			<div class="btn-group" role="group" aria-label="Basic example">
+				<button type="button" class="btn btn-default" id="refeshBtn" (click)="refreshClusterBtn()" title="Refresh Cluster List" alt="Refresh Cluster List"></button>
+				<button type="button" class="btn btn-default" id="addBtn" (click)="addClusterBtn()" data-toggle="modal" data-target="#addClusterModal" title="Add New Cluster" alt="Add New Cluster"></button>
+				<button type="button" class="btn btn-default" id="editBtn" [disabled]="btnEnabled" (click)="editClusterBtn()" title="Edit Cluster" alt="Edit Cluster" data-toggle="modal" data-target="#editClusterModal"></button>
+				<button type="button" class="btn btn-default" id="deleteBtn" [disabled]="btnEnabled" (click)="deleteClusterBtn()" data-toggle="modal" data-target="#deleteClusterModal" title="Delete Cluster" alt="Delete Cluster"></button>
+				<button type="button" class="btn btn-default" id="importBtn" [disabled]="btnEnabled" (click)="importBtn()" data-toggle="modal" data-target="#importAPModal" title="Import AP" alt="Import AP"></button>
+			</div>
+			<div class="input-group" align="center" hidden="true">
+				<input class="form-control"
+				placeholder="Search Cluster by Name" #searchText>
+				<div class="input-group-addon" (click)="searchCluster(searchText.value)" ><i class="fa fa-search"></i></div>
+			</div>
+			<div id="totalClusterCount" hidden="true">Total: {{numberofclusters}}</div>
+		</div>
+	</div>
+	<clusterList (deleteClusterEvent)="selectedClusterList($event)" [doAddRefresh]=doAddRefreshList [doDeleteRefresh]=doDeleteRefreshList [doImportRefresh]=doImportRefreshList [refreshcluster]=refreshcluster [doEditRefreshList]=doEditRefreshList  (isEnabled)="receiveResponse($event)"></clusterList>
+	<add-cluster [ngStyle]="{'display':addClusterdisplay}" (refreshEvent)="receiveAddRefresh($event)"></add-cluster>
+	<delete-cluster [ngStyle]="{'display':deleteClusterdisplay}" (refreshListEvent)="receiveDeleteRefresh($event)" [selectedClusterListData]=selectedClusterListData [noCluster]=noClusterSelected [hasAP]=hasAPCluster></delete-cluster>
+	<app-import-ap [ngStyle]="{'display':importAPDisplay}" (refreshListEvent)="receiveImportRefresh($event)" [noCluster]=noClusterSelected [selectedClusterForImport]=selectedClusterForImport [multipleCluserSelected]=multipleCluserSelected></app-import-ap>
+	<app-edit-cluster [editCluster]=editCluster (refreshEditEvent)=receiveEditRefresh($event) ></app-edit-cluster>
+
+<!-- The Modal -->
+<div class="modal fade" id="clusterModelDialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{modelTitle}}</h4>
+				<button type="button" class="close crossBtn" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="body-content">
+					<div>
+						<label>{{modelMessage}}</label>
+					</div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" id="okBtn" (click)="onOk()" >OK</button>
+			</div>
+			
+		</div>
+	</div>
+</div>
+	<!-- <ng-template #openDialog></ng-template> -->
+<ng-template #openDialog></ng-template>

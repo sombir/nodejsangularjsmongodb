@@ -1,0 +1,31 @@
+<router-outlet></router-outlet>
+<!-- <footer class="fixed-bottom" align="center">Arris Intenational Plc, All rights reserved.</footer> -->
+<!-- <ng-template #openDialog></ng-template> -->
+<!-- The Modal -->
+<div class="modal fade" id="sessionExpireModelDialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">{{modelTitle}}</h4>
+				<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div *ngIf="resMessageArr.length != 0" class="body-content BulkAPRes">
+					<div *ngFor="let reMessage of resMessageArr">
+						<label>{{reMessage}}</label>
+					</div>
+				</div>
+				<div *ngIf="resMessageArr.length == 0" class="body-content">
+					<div><label>{{modelMessage}}</label></div>
+				</div>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" id="okBtn" (click)="onOk()" >OK</button>
+			</div>
+			
+		</div>
+	</div>
+</div>
